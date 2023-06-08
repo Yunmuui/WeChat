@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.WeChatMomentsActivity"
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="LinearLayoutManager"/>
+<!--    &lt;!&ndash;    朋友圈封面&ndash;&gt;-->
+<!--    <FrameLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="360dp"-->
+<!--        android:background="@color/white">-->
+<!--        &lt;!&ndash;        封面&ndash;&gt;-->
+<!--        <ImageView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/cover_image" />-->
+<!--        &lt;!&ndash;        工具栏&ndash;&gt;-->
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/mytoolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:navigationIcon="@drawable/login_back_icon"-->
+<!--            android:layout_marginTop="20dp">-->
+<!--            &lt;!&ndash;            相机&ndash;&gt;-->
+<!--            <ActionMenuView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@drawable/camera"-->
+<!--                android:layout_gravity="right|bottom"-->
+<!--                android:layout_marginBottom="29dp"-->
+<!--                android:layout_marginRight="30dp"/>-->
+<!--        </androidx.appcompat.widget.Toolbar>-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="right|bottom">-->
+<!--            &lt;!&ndash;        头像&ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:id="@+id/tv_username"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Youan"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="20dp"-->
+<!--                android:paddingRight="10dp"-->
+<!--                android:paddingTop="15dp"/>-->
+<!--            <androidx.constraintlayout.utils.widget.ImageFilterButton-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="100dp"-->
+<!--                android:layout_gravity="right|bottom"-->
+<!--                android:background="@drawable/profile_picture"-->
+<!--                android:layout_marginRight="20dp"-->
+<!--                android:contentDescription="profile picture"-->
+<!--                app:round="10dp"/>-->
+<!--        </LinearLayout>-->
+<!--    </FrameLayout>-->
+
+<!--    &lt;!&ndash;    一条朋友圈&ndash;&gt;-->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:background="@color/white"-->
+<!--        android:layout_marginTop="30dp">-->
+<!--        &lt;!&ndash;        头像&ndash;&gt;-->
+<!--        <androidx.constraintlayout.utils.widget.ImageFilterButton-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:background="@drawable/yuge"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:contentDescription="profile picture"-->
+<!--            app:round="10dp"/>-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_marginLeft="20dp">-->
+<!--            &lt;!&ndash;        名字和内容&ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="雨哥到处跑"-->
+<!--                android:textColor="#950D3E93"-->
+<!--                android:textSize="16dp"/>-->
+<!--            <TextView-->
+<!--                android:layout_width="300dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="随机挑战的全新系列！蹭饭挑战！无限羞耻！究极自闭！全程高能！最终章！-->
+<!--第六期：BV13T4y1d741"-->
+<!--                android:textSize="16dp"/>-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+<!--                &lt;!&ndash;        时间&ndash;&gt;-->
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:text="1小时前"-->
+<!--                    android:textSize="14dp"/>-->
+<!--                <View-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_weight="1"/>-->
+<!--                &lt;!&ndash;        点赞评论按钮&ndash;&gt;-->
+<!--                <androidx.constraintlayout.utils.widget.ImageFilterButton-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="24dp"-->
+<!--                    android:background="@drawable/remark"-->
+<!--                    android:layout_marginRight="10dp"-->
+<!--                    android:contentDescription="remark"-->
+<!--                    app:round="10dp"/>-->
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
+<!--    &lt;!&ndash;    一条朋友圈&ndash;&gt;-->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:background="@color/white"-->
+<!--        android:layout_marginTop="30dp">-->
+<!--        &lt;!&ndash;        头像&ndash;&gt;-->
+<!--        <androidx.constraintlayout.utils.widget.ImageFilterButton-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:background="@drawable/songyunsheng"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:contentDescription="profile picture"-->
+<!--            app:round="10dp"/>-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_marginLeft="20dp">-->
+<!--            &lt;!&ndash;        名字和内容&ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="宋云生-"-->
+<!--                android:textColor="#950D3E93"-->
+<!--                android:textSize="16dp"/>-->
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="省流:无视风险，继续安装"-->
+<!--                android:textSize="16dp"/>-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+<!--                &lt;!&ndash;        时间&ndash;&gt;-->
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:text="4小时前"-->
+<!--                    android:textSize="14dp"/>-->
+<!--                <View-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_weight="1"/>-->
+<!--                &lt;!&ndash;        点赞评论按钮&ndash;&gt;-->
+<!--                <androidx.constraintlayout.utils.widget.ImageFilterButton-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="24dp"-->
+<!--                    android:background="@drawable/remark"-->
+<!--                    android:layout_marginRight="10dp"-->
+<!--                    android:contentDescription="remark"-->
+<!--                    app:round="10dp"/>-->
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
+<!--    &lt;!&ndash;    一条朋友圈&ndash;&gt;-->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:background="@color/white"-->
+<!--        android:layout_marginTop="30dp">-->
+<!--        &lt;!&ndash;        头像&ndash;&gt;-->
+<!--        <androidx.constraintlayout.utils.widget.ImageFilterButton-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:background="@drawable/zhongguoboy"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:contentDescription="profile picture"-->
+<!--            app:round="10dp"/>-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_marginLeft="20dp">-->
+<!--            &lt;!&ndash;        名字和内容&ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="中国BOY超级大猩猩"-->
+<!--                android:textColor="#950D3E93"-->
+<!--                android:textSize="16dp"/>-->
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="我看大家好像对最后拍出来的拍立得很感兴趣，这样吧。这期视频抽两个幸运儿送了"-->
+<!--                android:textSize="16dp"/>-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+<!--                &lt;!&ndash;        时间&ndash;&gt;-->
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:text="6小时前"-->
+<!--                    android:textSize="14dp"/>-->
+<!--                <View-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_weight="1"/>-->
+<!--                &lt;!&ndash;        点赞评论按钮&ndash;&gt;-->
+<!--                <androidx.constraintlayout.utils.widget.ImageFilterButton-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="24dp"-->
+<!--                    android:background="@drawable/remark"-->
+<!--                    android:layout_marginRight="10dp"-->
+<!--                    android:contentDescription="remark"-->
+<!--                    app:round="10dp"/>-->
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
+
+</LinearLayout>

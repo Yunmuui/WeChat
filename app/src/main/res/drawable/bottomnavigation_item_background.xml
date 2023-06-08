@@ -1,0 +1,5 @@
+<!-- res/drawable/item_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#ECEBEB" />
+</shape>

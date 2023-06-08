@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/search"
+        android:title="搜索"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/startChats"
+        android:title="发起群聊"
+        android:icon="@drawable/ic_search" />
+    <item
+        android:id="@+id/addFriends"
+        android:title="添加朋友"
+        android:icon="@drawable/ic_search"/>
+    <item
+        android:id="@+id/sacn"
+        android:title="扫一扫"
+        android:icon="@drawable/ic_search"/>
+    <item
+        android:id="@+id/pay"
+        android:title="收付款"
+        android:icon="@drawable/ic_search"/>
+</menu>

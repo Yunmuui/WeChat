@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/chats"
+        android:title="微信"
+        android:icon="@drawable/ic_selector_chats" />
+    <item
+        android:id="@+id/contacts"
+        android:title="通讯录"
+        android:icon="@drawable/ic_selector_contacts" />
+    <item
+        android:id="@+id/discover"
+        android:title="发现"
+        android:icon="@drawable/ic_selector_discover" />
+    <item
+        android:id="@+id/me"
+        android:title="我的"
+        android:icon="@drawable/ic_selector_me" />
+</menu>

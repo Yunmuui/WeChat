@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.MainActivity"
+    android:orientation="vertical">
+
+<!--fragment-->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+<!--底部导航栏-->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
+        style="@style/Widget.Design.BottomNavigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:background="?android:attr/windowBackground"
+        app:itemBackground="@drawable/bottomnavigation_item_background"
+        app:itemPaddingBottom="20dp"
+        app:itemPaddingTop="15dp"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@drawable/selector_menu_icon_color"
+        app:itemTextColor="@drawable/selector_menu_text_color"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/menu_bottom_navigation" />
+
+
+
+</LinearLayout>
