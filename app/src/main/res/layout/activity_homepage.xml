@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.HomepageActivity"
+    android:background="@drawable/initial_background">
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="15dp"
+        android:text="登录"
+        android:textSize="19dp"
+        app:backgroundTint="#07C05D"
+        android:background="@drawable/button_homepage1"
+        />
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="15dp"
+        android:text="注册"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        app:backgroundTint="#FEFDFD"
+        android:background="@drawable/button_homepage1"
+        />
+
+
+</FrameLayout>
