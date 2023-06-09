@@ -11,7 +11,7 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"/>
 
 <!--底部导航栏-->
@@ -29,7 +29,4 @@
         app:itemTextColor="@drawable/selector_menu_text_color"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_bottom_navigation" />
-
-
-
 </LinearLayout>
