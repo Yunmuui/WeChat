@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ChatActivity"
+    android:background="#ECECEC"
+    android:orientation="vertical">
+<!--顶部-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/chat_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/login_back_icon"
+            app:backgroundTint="#090808"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/chat_name"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:text="标题"
+            android:textSize="30dp"
+            android:textAlignment="center"
+            android:layout_weight="6"/>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/chat_people"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            app:navigationIcon="@drawable/more_information"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+<!--消息-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/msg_recycle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+    <!--底部发送消息-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/input_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="请输入内容"
+            android:maxLines="2"
+            />
+
+        <Button
+            android:id="@+id/send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发送"
+            app:backgroundTint="#1E8F34"
+            android:textColor="#fff"
+            android:background="@drawable/button_homepage1"/>
+    </LinearLayout>
+</LinearLayout>
