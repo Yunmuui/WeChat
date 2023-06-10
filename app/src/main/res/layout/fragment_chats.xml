@@ -39,7 +39,14 @@
             android:layout_height="wrap_content"
             android:text="登录用户:未登录"
             android:textSize="40dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chats_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="LinearLayoutManager"/>
     </LinearLayout>
+
 
 
 </FrameLayout>

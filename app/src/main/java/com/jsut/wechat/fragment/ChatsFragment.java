@@ -10,16 +10,26 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.jsut.wechat.Dao.ChatsDao;
 import com.jsut.wechat.Dao.ContactsDao;
+import com.jsut.wechat.DataBase.ChatsDatabase;
 import com.jsut.wechat.DataBase.ContactsDataBase;
+import com.jsut.wechat.Entity.Chat;
 import com.jsut.wechat.Entity.Contact;
 import com.jsut.wechat.R;
+import com.jsut.wechat.adapter.ChatsAdapter;
+import com.jsut.wechat.adapter.ContactsAdapter;
 import com.jsut.wechat.viewModel.LoginViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,6 +50,9 @@ public class ChatsFragment extends Fragment {
     private TextView mUserNameTextView;
 
     private LoginViewModel mLoginViewModel;
+    private RecyclerView recyclerView;
+
+    private ChatsAdapter chatsAdapter;
 
     public ChatsFragment() {
         // Required empty public constructor
@@ -85,8 +98,31 @@ public class ChatsFragment extends Fragment {
         mLoginViewModel.getLoginStatus().observe(getViewLifecycleOwner(), loginStatus -> mUserNameTextView.setText("登录用户:"+loginStatus));
         // 获取toolbar
         myToolBar = view.findViewById(R.id.mytoolbar);
+        // 获得recyclerView
+        recyclerView = view.findViewById(R.id.chats_recyclerView);
+        // 刷新聊天列表
+        refreshChatsList(recyclerView);
         setToolBarListener(myToolBar);
         return view;
+    }
+
+    private void refreshChatsList(RecyclerView recyclerView) {
+        // 查询数据库、创建适配器、刷新recyclerView
+        if(getContext()!=null){
+            ChatsDao dao = ChatsDatabase.getDatabaseInstance(getContext()).getChatsDao();
+            Chat.OneChat oneChat1 = new Chat.OneChat("用户A", "用户B", "TEXT", "你好", "2小时前");
+            Chat.OneChat oneChat2 = new Chat.OneChat("用户B", "用户A", "TEXT", "你在哪", "1小时前");
+            List<Chat.OneChat> test = new ArrayList<>();
+            test.add(oneChat1);
+            test.add(oneChat2);
+            dao.insert(new Chat("用户A", "用户B", "你在哪", "1小时前",test));
+            List<Chat> chatsList = dao.getChatsList(mLoginViewModel.getLoginStatus().getValue());
+
+            chatsAdapter = new ChatsAdapter(new ArrayList<>(chatsList));
+            //chatsAdapter.setOnDeleteClickListener(this);
+            recyclerView.setAdapter(chatsAdapter);
+            recyclerView.setNestedScrollingEnabled(false);
+        }
     }
 
     public void setToolBarListener(Toolbar toolbar) {

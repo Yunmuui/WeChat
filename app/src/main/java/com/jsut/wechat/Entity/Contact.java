@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Contacts")
 public class Contact {
-    //用户
+    //id
     @PrimaryKey(autoGenerate = true)
     public int id;
 
