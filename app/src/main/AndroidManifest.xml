@@ -11,13 +11,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".activity.ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.MusicPlayer"
             android:exported="false" />
         <activity
             android:name=".activity.WeChatMomentsActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.HomepageActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +37,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".service.MusicService"/>
+
+        <service android:name=".service.MusicService" />
     </application>
 
 </manifest>

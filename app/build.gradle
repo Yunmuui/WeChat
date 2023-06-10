@@ -31,10 +31,13 @@ android {
         main{
             res.srcDirs = [     //这是个方括号
                                 'src/main/res', //默认只有这一个路径
-                                'res_homepage'   //这个就是告诉gradle在编译的时候到这个文件夹找资源文件
+                                'src/main/res_homepage',   //这个就是告诉gradle在编译的时候到这个文件夹找资源文件
+                                 'src/main/res_chat'
+
             ]
         }
     }
+
 }
 
 dependencies {
