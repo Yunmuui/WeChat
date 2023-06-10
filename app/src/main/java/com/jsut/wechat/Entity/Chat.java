@@ -1,5 +1,8 @@
 package com.jsut.wechat.Entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -8,7 +11,6 @@ import androidx.room.TypeConverters;
 
 import com.jsut.wechat.Converter.ChatTypeConverters;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity(tableName = "Chats")
@@ -52,7 +54,7 @@ public class Chat {
         this.chatContent = chatContent;
     }
 
-    public static class OneChat{
+    public static class OneChat implements Parcelable {
         private String sender;
         private String receiver;
         private String chatType;
@@ -106,6 +108,42 @@ public class Chat {
         public void setTime(String time) {
             this.time = time;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(@NonNull Parcel dest, int flags) {
+            dest.writeString(sender);
+            dest.writeString(receiver);
+            dest.writeString(chatType);
+            dest.writeString(chatContent);
+            dest.writeString(time);
+        }
+        protected OneChat(Parcel in) {
+            sender = in.readString();
+            receiver = in.readString();
+            chatType = in.readString();
+            chatContent = in.readString();
+            time = in.readString();
+        }
+        public static final Creator<OneChat> CREATOR = new Creator<OneChat>() {
+            @Override
+            public OneChat createFromParcel(Parcel in) {
+                return new OneChat(in);
+            }
+
+            @Override
+            public OneChat[] newArray(int size) {
+                return new OneChat[size];
+            }
+        };
+    }
+
+    public int getId() {
+        return id;
     }
 
     @NonNull

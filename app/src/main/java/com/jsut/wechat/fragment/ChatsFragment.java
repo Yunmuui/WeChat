@@ -128,7 +128,7 @@ public class ChatsFragment extends Fragment {
             dao.insert(new Chat("用户A", "用户B", "你在哪", "1小时前",test));
             List<Chat> chatsList = dao.getChatsList(mLoginViewModel.getLoginStatus().getValue());
 
-            chatsAdapter = new ChatsAdapter(new ArrayList<>(chatsList));
+            chatsAdapter = new ChatsAdapter(new ArrayList<>(chatsList),getContext());
             //chatsAdapter.setOnDeleteClickListener(this);
             recyclerView.setAdapter(chatsAdapter);
             recyclerView.setNestedScrollingEnabled(false);
