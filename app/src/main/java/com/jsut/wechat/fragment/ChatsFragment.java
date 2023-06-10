@@ -1,6 +1,8 @@
 package com.jsut.wechat.fragment;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -19,11 +21,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jsut.wechat.Dao.ChatsDao;
 import com.jsut.wechat.Dao.ContactsDao;
+import com.jsut.wechat.Dao.UserDao;
 import com.jsut.wechat.DataBase.ChatsDatabase;
 import com.jsut.wechat.DataBase.ContactsDataBase;
+import com.jsut.wechat.DataBase.UserDatabase;
 import com.jsut.wechat.Entity.Chat;
 import com.jsut.wechat.Entity.Contact;
+import com.jsut.wechat.Entity.User;
 import com.jsut.wechat.R;
+import com.jsut.wechat.activity.LoginActivity;
 import com.jsut.wechat.adapter.ChatsAdapter;
 import com.jsut.wechat.adapter.ContactsAdapter;
 import com.jsut.wechat.viewModel.LoginViewModel;
@@ -92,6 +98,7 @@ public class ChatsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chats, container, false);
         // 找到textview
         mUserNameTextView = view.findViewById(R.id.show_logined_user);
+
         // 获取 ViewModel 实例
         mLoginViewModel = new ViewModelProvider(getActivity()).get(LoginViewModel.class);
         // 观察 LiveData，并在状态改变时更新 TextView 组件的文本内容

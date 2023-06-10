@@ -53,6 +53,9 @@ public class LoginActivity extends AppCompatActivity {
                     if(user.password.equals(user1.password)){
                         Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("phone", user.phone);
+                        intent.putExtras(bundle);
                         startActivity(intent);
                         return;
                     }

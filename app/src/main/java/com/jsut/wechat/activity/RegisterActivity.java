@@ -55,6 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
                     user.name = rename.getText().toString().trim();
                     user.phone = rephone.getText().toString().trim();
                     user.password = repassword.getText().toString().trim();
+
                     userDao.inserUser(user);
                     Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);

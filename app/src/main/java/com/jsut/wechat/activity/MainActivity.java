@@ -27,6 +27,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.jsut.wechat.Dao.UserDao;
+import com.jsut.wechat.DataBase.UserDatabase;
+import com.jsut.wechat.Entity.User;
 import com.jsut.wechat.R;
 import com.jsut.wechat.fragment.ChatsFragment;
 import com.jsut.wechat.fragment.ContactsFragment;
@@ -56,8 +59,10 @@ public class MainActivity extends AppCompatActivity {
         setStatusBar();
 
 
-
         mLoginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+
+        //用户登陆显示
+        user_name();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         viewPager=findViewById(R.id.viewpager);
@@ -230,5 +235,18 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this,"登录成功",Toast.LENGTH_LONG).show();
         // 将登录状态设为user
         mLoginViewModel.setLoginStatus(user);
+    }
+    public void user_name(){
+        Intent intent=getIntent();
+        Bundle bundle = intent.getExtras();
+        UserDao userDao = UserDatabase.getDatabaseInstance(MainActivity.this).getUserDao();
+        User user=new User();
+        user.phone=bundle.getString("phone");
+        List<User> user1List = userDao.getallUserByPhone(user.phone);
+        for (User user1 : user1List) {
+            if(user.phone.equals(user1.phone)){
+                mLoginViewModel.setLoginStatus(user1.name);
+            }
+        }
     }
 }
