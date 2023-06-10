@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (position) {
                     case 0:
                         bottomNavigationView.setSelectedItemId(R.id.chats);
+                        if(chatsFragment!=null) ((ChatsFragment)chatsFragment).refreshChatsList();
                         break;
                     case 1:
                         bottomNavigationView.setSelectedItemId(R.id.contacts);

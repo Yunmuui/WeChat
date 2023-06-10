@@ -106,6 +106,9 @@ public class ChatsFragment extends Fragment {
         return view;
     }
 
+    public void refreshChatsList(){
+        refreshChatsList(recyclerView);
+    }
     private void refreshChatsList(RecyclerView recyclerView) {
         // 查询数据库、创建适配器、刷新recyclerView
         if(getContext()!=null){
