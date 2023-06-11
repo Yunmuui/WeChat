@@ -26,8 +26,8 @@ public class MsgAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         LinearLayout leftLayout;
         LinearLayout rightLayout;
-        TextView leftMsg;
-        TextView rightMsg;
+        TextView leftMsg,leftname;
+        TextView rightMsg,rightname;
 
         public ViewHolder(View view){
             super(view);
@@ -35,6 +35,8 @@ public class MsgAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             rightLayout = view.findViewById(R.id.right_layout);
             leftMsg = view.findViewById(R.id.left_msg);
             rightMsg = view.findViewById(R.id.right_msg);
+            leftname=view.findViewById(R.id.left_name);
+            rightname=view.findViewById(R.id.right_name);
         }
 
     }
@@ -61,11 +63,13 @@ public class MsgAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             ((MsgAdapter.ViewHolder) holder).leftLayout.setVisibility(View.VISIBLE);
             ((MsgAdapter.ViewHolder) holder).rightLayout.setVisibility(View.GONE);
             ((ViewHolder) holder).leftMsg.setText(msg.getChatContent());
+            ((ViewHolder) holder).leftname.setText(msg.getSender());
 
         }else if(msg.getSender().equals(user)){
             ((MsgAdapter.ViewHolder) holder).rightLayout.setVisibility(View.VISIBLE);
             ((MsgAdapter.ViewHolder) holder).leftLayout.setVisibility(View.GONE);
             ((MsgAdapter.ViewHolder) holder).rightMsg.setText(msg.getChatContent());
+            ((MsgAdapter.ViewHolder) holder).rightname.setText(msg.getSender());
         }
     }
 
