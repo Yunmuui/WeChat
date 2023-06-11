@@ -303,6 +303,7 @@ public class ChatActivity extends AppCompatActivity {
     public void open_more_menu(View view) {
         //获取more_menu参数
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) more_menu.getLayoutParams();
+        LinearLayout.LayoutParams params1 = (LinearLayout.LayoutParams) chat_window.getLayoutParams();
         //修改weight，从0到1或从1到0
         params.weight=params.weight==1?0:1;
         //设置参数，通过weight改变实现抽屉效果
