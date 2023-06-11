@@ -4,15 +4,31 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "RemoteMsg")
 public class OneMsg implements Parcelable{
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+    @ColumnInfo(name = "sender")
+    @NonNull
     private String sender;
+    @ColumnInfo(name = "receiver")
+    @NonNull
     private String receiver;
+    @ColumnInfo(name = "chatType")
+    @NonNull
     private String chatType;
+    @ColumnInfo(name = "chatContent")
+    @NonNull
     private String chatContent;
+    @ColumnInfo(name = "time")
+    @NonNull
     private String time;
 
-    public OneMsg(String sender, String receiver, String chatType, String chatContent, String time) {
+    public OneMsg(@NonNull String sender, @NonNull String receiver, @NonNull String chatType, @NonNull String chatContent, @NonNull String time) {
         this.sender = sender;
         this.receiver = receiver;
         this.chatType = chatType;
