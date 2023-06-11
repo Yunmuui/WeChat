@@ -5,7 +5,7 @@ import androidx.room.TypeConverter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jsut.wechat.Entity.Chat;
-import com.jsut.wechat.Entity.Chat.OneMsg;
+import com.jsut.wechat.Entity.OneMsg;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -20,7 +20,7 @@ public class ChatTypeConverters {
     }
 
     @TypeConverter
-    public static String toJson(List<Chat.OneMsg> list) {
+    public static String toJson(List<OneMsg> list) {
         return gson.toJson(list);
     }
 }
