@@ -41,11 +41,7 @@
                 android:layout_weight="1"/>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/shoot_photo"
-            android:layout_width="100dp"
-            android:layout_height="200dp"
-            android:scaleType="fitCenter"/>
+
     <!--消息-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/msg_recycle"
@@ -78,13 +74,13 @@
             app:backgroundTint="#1E8F34"
             android:textColor="#fff"
             android:background="@drawable/button_homepage1"/>
+
         <Button
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/open_more_menu_button"
-            app:backgroundTint="@color/black"
-            android:onClick="open_more_menu">
-        </Button>
+            android:onClick="open_more_menu"
+            app:backgroundTint="@color/black"></Button>
     </LinearLayout>
 
 <!--    更多菜单-->

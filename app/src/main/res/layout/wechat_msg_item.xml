@@ -42,8 +42,8 @@
                 android:id="@+id/left_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxWidth="100dp"
-                android:maxHeight="100dp"
+                android:maxWidth="80dp"
+                android:maxHeight="80dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"/>
         </LinearLayout>
@@ -82,8 +82,8 @@
                 android:id="@+id/right_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxWidth="100dp"
-                android:maxHeight="100dp"
+                android:maxWidth="80dp"
+                android:maxHeight="80dp"
                 android:layout_gravity="center"
                 android:layout_marginRight="10dp"/>
         </LinearLayout>

@@ -31,7 +31,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jsut.wechat.Dao.ChatsDao;
+import com.jsut.wechat.Dao.RemoteMsgDao;
 import com.jsut.wechat.DataBase.ChatsDatabase;
+import com.jsut.wechat.DataBase.RemoteMsgDatabase;
 import com.jsut.wechat.Entity.Chat;
 import com.jsut.wechat.Entity.OneMsg;
 import com.jsut.wechat.Entity.User;
@@ -56,11 +58,13 @@ public class ChatActivity extends AppCompatActivity {
 
     Button back;
     ImageFilterButton shoot_button;
-    ImageView shoot_photo;
+    //ImageView shoot_photo;
     private Uri imageUri;
 
     LinearLayout more_menu;
     LinearLayout chat_window;
+    ChatsDao dao;
+    RemoteMsgDao far_dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +87,11 @@ public class ChatActivity extends AppCompatActivity {
         input = (EditText)findViewById(R.id.input_text);
         Button send = (Button) findViewById(R.id.send);
         shoot_button = findViewById(R.id.shoot_button);
-        shoot_photo = findViewById(R.id.shoot_photo);
+        //shoot_photo = findViewById(R.id.shoot_photo);
+
+        //打开数据库
+        dao = ChatsDatabase.getDatabaseInstance(ChatActivity.this).getChatsDao();
+        far_dao= RemoteMsgDatabase.getDatabaseInstance(ChatActivity.this).getRemoteMsgDao();
 
         //设置控件
         chat_name.setText(chatTitle);
@@ -96,8 +104,6 @@ public class ChatActivity extends AppCompatActivity {
         msgAdapter = new MsgAdapter(chatContent,user);
         msg_recycle.setAdapter(msgAdapter);
 
-        //打开数据库
-        ChatsDao dao = ChatsDatabase.getDatabaseInstance(ChatActivity.this).getChatsDao();
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,8 +118,8 @@ public class ChatActivity extends AppCompatActivity {
             String content = input.getText().toString();
 
             if(!"".equals(content)){
-                OneMsg msg =new OneMsg(user,chatTitle,"text",content,"0");
-                //修改数据库信息
+                OneMsg msg =new OneMsg(user,chatTitle,"TEXT",content,"0");
+                //修改本地数据库信息
                 List<Chat> chatsList =dao.getChatsList(user);
                 Chat chat = null;
                 for(Chat chat1:chatsList){
@@ -124,6 +130,9 @@ public class ChatActivity extends AppCompatActivity {
                 chatContent.add(msg);
                 chat.chatContent=chatContent;
                 dao.updateContent(chat);
+                //插入远程数据库
+                far_dao.insert(msg);
+
                 //当有新消息，刷新RecyclerView的显示
                 msgAdapter.notifyItemInserted(chatContent.size());
                 //将RecyclerView定位到最后一行
@@ -134,6 +143,38 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    public void adddImage(Bitmap bitmap){
+        String chatTitle = getIntent().getStringExtra("chatTitle");
+        List<OneMsg> chatContent = getIntent().getParcelableArrayListExtra("chatContent");
+        int id = getIntent().getIntExtra("id", 0);
+
+        String chatting=bitmapToString(bitmap);
+        OneMsg msg=new OneMsg(user,chatTitle,"IMAGE",chatting,"0");
+        //修改数据库信息
+        List<Chat> chatsList =dao.getChatsList(user);
+        Chat chat = null;
+        for(Chat chat1:chatsList){
+            if(chat1.getId()==id){
+                chat=chat1;
+            }
+        }
+        chatContent.add(msg);
+        chat.chatContent=chatContent;
+        dao.updateContent(chat);
+        //插入远程数据库
+        far_dao.insert(msg);
+        //当有新消息，刷新RecyclerView的显示
+        msgAdapter.notifyItemInserted(chatContent.size());
+        //将RecyclerView定位到最后一行
+        msg_recycle.scrollToPosition(chatContent.size());
+
+    }
+    public static String bitmapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] bytes = baos.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
+    }
     /**
      * 获取活动或片段的位图和图像路径onActivityResult
      *
@@ -153,8 +194,9 @@ public class ChatActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             if (bitmap != null) {
-                shoot_photo.setImageBitmap(bitmap); // 展示刚拍过的照片
-                getImgBase64(shoot_photo); // 直接把 imageview 取出图片转换为base64格式
+                adddImage(bitmap);
+                //shoot_photo.setImageBitmap(bitmap); // 展示刚拍过的照片
+                //getImgBase64(shoot_photo); // 直接把 imageview 取出图片转换为base64格式
             } else {
                 Toast.makeText(this.getApplicationContext(), "Picture not taken!", Toast.LENGTH_SHORT).show();
             }
@@ -228,7 +270,6 @@ public class ChatActivity extends AppCompatActivity {
     private void startCamera() {
         //创建file对象，用于存储拍照后的图片；
         File outputImage = new File(getExternalCacheDir(), "output_image.jpg");
-
         try {
             if (outputImage.exists()) {
                 outputImage.delete();
