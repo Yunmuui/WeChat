@@ -39,12 +39,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
         >
         <androidx.constraintlayout.utils.widget.ImageFilterView
-            android:layout_width="90dp"
-            android:layout_height="90dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             app:round="10dp"
             android:background="@color/green"/>
         <LinearLayout
@@ -56,36 +56,149 @@
                 android:id="@+id/remark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"
+                android:textSize="22dp"
                 android:maxLines="1"/>
-            <TextView
-                android:id="@+id/friend_name"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="昵称："
-                android:textSize="20dp"
-                android:maxLines="1"/>
-            <TextView
-                android:id="@+id/id_number"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="昵称："
+                    android:textSize="16dp"/>
+                <TextView
+                    android:id="@+id/friend_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:maxLines="1"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="微信号："
-                android:textSize="20dp"
-                android:maxLines="1"/>
-            <TextView
-                android:id="@+id/friend_area"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="微信号："
+                    android:textSize="16dp"/>
+                <TextView
+                    android:id="@+id/friend_id_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:maxLines="1"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="地区："
-                android:textSize="20dp"
-                android:maxLines="1"/>
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="地区："
+                    android:textSize="16dp"/>
+                <TextView
+                    android:id="@+id/friend_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:maxLines="1"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
-    <!--3、操作列表-->
-    <ListView
-        android:id="@+id/friend_detail_operation1"
-        android:layout_marginTop="40dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="70dp"/>
+    <!--3、操作选项-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_marginLeft="26dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divide_line" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_homepage1"
+            app:backgroundTint="@color/white"
+            android:text="设置备注和标签"
+            android:textSize="16dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            />
+        <ImageView
+            android:layout_marginLeft="26dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divide_line" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_homepage1"
+            app:backgroundTint="@color/white"
+            android:text="朋友圈"
+            android:textSize="16dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            />
+        <ImageView
+            android:layout_marginLeft="26dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divide_line" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_homepage1"
+            app:backgroundTint="@color/white"
+            android:text="更多信息"
+            android:textSize="16dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            />
+        <ImageView
+            android:layout_marginLeft="26dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divide_line" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_homepage1"
+            app:backgroundTint="@color/white"
+            android:text="删除好友"
+            android:textSize="16dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/divide_line" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_homepage1"
+            app:backgroundTint="@color/white"
+            android:text="发消息"
+            android:textSize="17dp"
+            android:textColor="@color/blue"
+            android:onClick="sendMessageOnClick"
+            />
+        <ImageView
+            android:layout_marginLeft="26dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divide_line" />
+    </LinearLayout>
+
+    <!--4、背景色-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/divide_line"/>
 </LinearLayout>
