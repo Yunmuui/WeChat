@@ -63,6 +63,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         ((ViewHolder)holder).contact_friend.setOnClickListener(v->{
             Intent intent = new Intent();
+            intent.putExtra("friendName",mData.get(position));
             intent.setClass(mContext, FriendDetailActivity.class);
             mContext.startActivity(intent);
         });
