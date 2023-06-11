@@ -121,6 +121,7 @@ public class ChatsFragment extends Fragment {
         // 查询数据库、创建适配器、刷新recyclerView
         if(getContext()!=null){
             ChatsDao dao = ChatsDatabase.getDatabaseInstance(getContext()).getChatsDao();
+            //dao.deleteAll();
             OneMsg oneChat1 = new OneMsg("用户A", "用户B", "TEXT", "你好", "2小时前");
             OneMsg oneChat2 = new OneMsg("用户B", "用户A", "TEXT", "你在哪", "1小时前");
             List<OneMsg> test = new ArrayList<>();

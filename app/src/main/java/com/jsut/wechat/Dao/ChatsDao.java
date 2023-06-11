@@ -22,7 +22,8 @@ public interface ChatsDao {
 
     @Delete
     void deleteAll(List<Chat> entities);
-
+    @Query("DELETE FROM Chats")
+    void deleteAll();
 //    @Query("SELECT * FROM Contacts Where user=:user and friend=:friend")
 //    List<Contact> getALLDelete(String user,String friend);
 //
