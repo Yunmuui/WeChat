@@ -44,9 +44,9 @@ public class Chat {
     @ColumnInfo(name = "chatContent")
     @NonNull
     @TypeConverters(ChatTypeConverters.class)
-    public List<OneChat> chatContent;
+    public List<OneMsg> chatContent;
 
-    public Chat(@NonNull String user, @NonNull String chatTitle, @NonNull String chatAbbreviation, @NonNull String chatTime, @NonNull List<OneChat> chatContent) {
+    public Chat(@NonNull String user, @NonNull String chatTitle, @NonNull String chatAbbreviation, @NonNull String chatTime, @NonNull List<OneMsg> chatContent) {
         this.user = user;
         this.chatTitle = chatTitle;
         this.chatAbbreviation = chatAbbreviation;
@@ -54,14 +54,18 @@ public class Chat {
         this.chatContent = chatContent;
     }
 
-    public static class OneChat implements Parcelable {
+    public Chat() {
+
+    }
+
+    public static class OneMsg implements Parcelable {
         private String sender;
         private String receiver;
         private String chatType;
         private String chatContent;
         private String time;
 
-        public OneChat(String sender, String receiver, String chatType, String chatContent, String time) {
+        public OneMsg(String sender, String receiver, String chatType, String chatContent, String time) {
             this.sender = sender;
             this.receiver = receiver;
             this.chatType = chatType;
@@ -122,22 +126,22 @@ public class Chat {
             dest.writeString(chatContent);
             dest.writeString(time);
         }
-        protected OneChat(Parcel in) {
+        protected OneMsg(Parcel in) {
             sender = in.readString();
             receiver = in.readString();
             chatType = in.readString();
             chatContent = in.readString();
             time = in.readString();
         }
-        public static final Creator<OneChat> CREATOR = new Creator<OneChat>() {
+        public static final Creator<OneMsg> CREATOR = new Creator<OneMsg>() {
             @Override
-            public OneChat createFromParcel(Parcel in) {
-                return new OneChat(in);
+            public OneMsg createFromParcel(Parcel in) {
+                return new OneMsg(in);
             }
 
             @Override
-            public OneChat[] newArray(int size) {
-                return new OneChat[size];
+            public OneMsg[] newArray(int size) {
+                return new OneMsg[size];
             }
         };
     }
@@ -167,7 +171,7 @@ public class Chat {
     }
 
     @NonNull
-    public List<OneChat> getChatContent() {
+    public List<OneMsg> getChatContent() {
         return chatContent;
     }
 }
