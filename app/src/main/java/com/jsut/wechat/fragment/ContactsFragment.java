@@ -1,5 +1,6 @@
 package com.jsut.wechat.fragment;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.jsut.wechat.Dao.ContactsDao;
 import com.jsut.wechat.DataBase.ContactsDataBase;
 import com.jsut.wechat.Entity.Contact;
+import com.jsut.wechat.Entity.User;
 import com.jsut.wechat.R;
 import com.jsut.wechat.adapter.ContactsAdapter;
 import com.jsut.wechat.viewModel.LoginViewModel;
@@ -25,15 +28,7 @@ import com.jsut.wechat.viewModel.LoginViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ContactsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ContactsFragment extends Fragment implements ContactsAdapter.OnDeleteClickListener{
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     //private SharedPreferences mSharedPreferences;
@@ -41,9 +36,8 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnDele
     private Toolbar myToolBar;
     private RecyclerView recyclerView;
     private ContactsAdapter contactsAdapter;
-
-
-    // TODO: Rename and change types of parameters
+    private User user;
+    private Context mContext;
     private String mParam1;
     private String mParam2;
 
@@ -51,15 +45,6 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnDele
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment NotificationFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ContactsFragment newInstance(String param1, String param2) {
         ContactsFragment fragment = new ContactsFragment();
         Bundle args = new Bundle();
@@ -76,6 +61,12 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnDele
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+
+    public static void view(View v){
+        TextView tv;
+        tv=(TextView)v.findViewById(R.id.friend);
     }
 
     @Override
@@ -104,7 +95,7 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnDele
         if(getContext()!=null){
             ContactsDao dao = ContactsDataBase.getDatabaseInstance(getContext()).getContactsDao();
             List<String> friendList = dao.getFriendList(mLoginViewModel.getLoginStatus().getValue());
-            contactsAdapter = new ContactsAdapter(new ArrayList<>(friendList));
+            contactsAdapter = new ContactsAdapter(new ArrayList<>(friendList),getContext());
             contactsAdapter.setOnDeleteClickListener(this);
             recyclerView.setAdapter(contactsAdapter);
             recyclerView.setNestedScrollingEnabled(false);

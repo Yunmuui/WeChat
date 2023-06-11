@@ -4,9 +4,12 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.jsut.wechat.Entity.Chat;
 import com.jsut.wechat.Entity.Contact;
+import com.jsut.wechat.Entity.OneMsg;
+import com.jsut.wechat.Entity.User;
 import com.jsut.wechat.fragment.ChatsFragment;
 
 import java.util.List;
@@ -32,5 +35,6 @@ public interface ChatsDao {
     List<Chat> getChatsList(String user);
 
     //更新本地聊天记录
-
+    @Update
+    void updateContent(Chat newChat);
 }
