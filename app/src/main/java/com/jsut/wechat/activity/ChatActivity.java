@@ -184,14 +184,12 @@ public class ChatActivity extends AppCompatActivity {
      * @param string
      * @return
      */
-    public static Bitmap stringtoBitmap(String string,ImageView imageView) {
+    public static Bitmap stringtoBitmap(String string) {
         Bitmap bitmap = null;
         try {
             byte[] bitmapArray;
             bitmapArray = Base64.decode(string, Base64.DEFAULT);
             bitmap = BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.length);
-
-            imageView.setImageBitmap(bitmap); // 展示图片
 
         } catch (Exception e) {
             e.printStackTrace();
