@@ -41,6 +41,10 @@
                 android:layout_weight="1"/>
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/shoot_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     <!--消息-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/msg_recycle"
@@ -111,10 +115,11 @@
             android:layout_marginLeft="30dp"
             android:orientation="vertical">
             <androidx.constraintlayout.utils.widget.ImageFilterButton
+                android:id="@+id/shoot_button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 app:round="10dp"
-                android:background="@drawable/more_menu_shoot"/>
+                android:background="@drawable/more_menu_shoot" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
