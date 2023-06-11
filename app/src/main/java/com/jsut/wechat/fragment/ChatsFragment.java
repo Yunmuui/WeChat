@@ -27,6 +27,7 @@ import com.jsut.wechat.DataBase.ContactsDataBase;
 import com.jsut.wechat.DataBase.UserDatabase;
 import com.jsut.wechat.Entity.Chat;
 import com.jsut.wechat.Entity.Contact;
+import com.jsut.wechat.Entity.OneMsg;
 import com.jsut.wechat.Entity.User;
 import com.jsut.wechat.R;
 import com.jsut.wechat.activity.LoginActivity;
@@ -120,9 +121,9 @@ public class ChatsFragment extends Fragment {
         // 查询数据库、创建适配器、刷新recyclerView
         if(getContext()!=null){
             ChatsDao dao = ChatsDatabase.getDatabaseInstance(getContext()).getChatsDao();
-            Chat.OneChat oneChat1 = new Chat.OneChat("用户A", "用户B", "TEXT", "你好", "2小时前");
-            Chat.OneChat oneChat2 = new Chat.OneChat("用户B", "用户A", "TEXT", "你在哪", "1小时前");
-            List<Chat.OneChat> test = new ArrayList<>();
+            OneMsg oneChat1 = new OneMsg("用户A", "用户B", "TEXT", "你好", "2小时前");
+            OneMsg oneChat2 = new OneMsg("用户B", "用户A", "TEXT", "你在哪", "1小时前");
+            List<OneMsg> test = new ArrayList<>();
             test.add(oneChat1);
             test.add(oneChat2);
             dao.insert(new Chat("用户A", "用户B", "你在哪", "1小时前",test));

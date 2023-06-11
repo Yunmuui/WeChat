@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jsut.wechat.Entity.Chat;
+import com.jsut.wechat.Entity.OneMsg;
 import com.jsut.wechat.R;
 import com.jsut.wechat.activity.ChatActivity;
 import com.jsut.wechat.fragment.ChatsFragment;
@@ -64,7 +65,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             public void onClick(View v) {
                 String user = mData.get(position).getUser();
                 String chatTitle = mData.get(position).getChatTitle(); // 获取聊天标题
-                List<Chat.OneChat> chatContent = mData.get(position).getChatContent(); // 获取聊天内容
+                List<OneMsg> chatContent = mData.get(position).getChatContent(); // 获取聊天内容
                 int Id = mData.get(position).getId(); // 获取聊天id
 
                 // 创建Intent对象，并传递参数

@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
@@ -44,9 +45,9 @@ public class Chat {
     @ColumnInfo(name = "chatContent")
     @NonNull
     @TypeConverters(ChatTypeConverters.class)
-    public List<OneChat> chatContent;
+    public List<OneMsg> chatContent;
 
-    public Chat(@NonNull String user, @NonNull String chatTitle, @NonNull String chatAbbreviation, @NonNull String chatTime, @NonNull List<OneChat> chatContent) {
+    public Chat(@NonNull String user, @NonNull String chatTitle, @NonNull String chatAbbreviation, @NonNull String chatTime, @NonNull List<OneMsg> chatContent) {
         this.user = user;
         this.chatTitle = chatTitle;
         this.chatAbbreviation = chatAbbreviation;
@@ -54,92 +55,9 @@ public class Chat {
         this.chatContent = chatContent;
     }
 
-    public static class OneChat implements Parcelable {
-        private String sender;
-        private String receiver;
-        private String chatType;
-        private String chatContent;
-        private String time;
+    @Ignore
+    public Chat() {
 
-        public OneChat(String sender, String receiver, String chatType, String chatContent, String time) {
-            this.sender = sender;
-            this.receiver = receiver;
-            this.chatType = chatType;
-            this.chatContent = chatContent;
-            this.time = time;
-        }
-
-        public String getSender() {
-            return sender;
-        }
-
-        public void setSender(String sender) {
-            this.sender = sender;
-        }
-
-        public String getReceiver() {
-            return receiver;
-        }
-
-        public void setReceiver(String receiver) {
-            this.receiver = receiver;
-        }
-
-        public String getChatType() {
-            return chatType;
-        }
-
-        public void setChatType(String chatType) {
-            this.chatType = chatType;
-        }
-
-        public String getChatContent() {
-            return chatContent;
-        }
-
-        public void setChatContent(String chatContent) {
-            this.chatContent = chatContent;
-        }
-
-        public String getTime() {
-            return time;
-        }
-
-        public void setTime(String time) {
-            this.time = time;
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel dest, int flags) {
-            dest.writeString(sender);
-            dest.writeString(receiver);
-            dest.writeString(chatType);
-            dest.writeString(chatContent);
-            dest.writeString(time);
-        }
-        protected OneChat(Parcel in) {
-            sender = in.readString();
-            receiver = in.readString();
-            chatType = in.readString();
-            chatContent = in.readString();
-            time = in.readString();
-        }
-        public static final Creator<OneChat> CREATOR = new Creator<OneChat>() {
-            @Override
-            public OneChat createFromParcel(Parcel in) {
-                return new OneChat(in);
-            }
-
-            @Override
-            public OneChat[] newArray(int size) {
-                return new OneChat[size];
-            }
-        };
     }
 
     public int getId() {
@@ -167,7 +85,7 @@ public class Chat {
     }
 
     @NonNull
-    public List<OneChat> getChatContent() {
+    public List<OneMsg> getChatContent() {
         return chatContent;
     }
 }
