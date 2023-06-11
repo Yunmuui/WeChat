@@ -23,6 +23,7 @@
             android:textSize="19dp"
             android:ems="1"
             android:padding="10dp"
+            android:textColor="@color/white"
             android:backgroundTint="#4D193877"/>
     </LinearLayout>
     <View
@@ -35,8 +36,8 @@
         android:layout_height="50dp"
         android:max="100"
         android:progress="0"
-        android:layout_marginTop="20dp"
-        android:background="#C9FFFFFF" />
+        android:layout_marginTop="20dp"/>
+        <!--android:background="#C9FFFFFF"-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
