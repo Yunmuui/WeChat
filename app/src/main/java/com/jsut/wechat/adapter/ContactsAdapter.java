@@ -1,15 +1,19 @@
 package com.jsut.wechat.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jsut.wechat.R;
+import com.jsut.wechat.activity.FriendDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +27,20 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public TextView friend;
 
         public Button delete_friend;
+        private LinearLayout contact_friend;
 
         public ViewHolder(View v) {
             super(v);
+            contact_friend=v.findViewById(R.id.contact_friend);
             friend = v.findViewById(R.id.friend);
-            delete_friend=v.findViewById(R.id.delete_friend);
+            /*delete_friend=v.findViewById(R.id.delete_friend);*/
         }
     }
+    public Context mContext;
 
-    public ContactsAdapter(ArrayList<String> data) {
+    public ContactsAdapter(ArrayList<String> data, Context context) {
         mData = data;
+        mContext = context;
     }
 
     @Override
@@ -45,11 +53,18 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((ViewHolder) holder).friend.setText(mData.get(position));
+        /*
         // 为删除按钮设置点击事件
         ((ViewHolder) holder).delete_friend.setOnClickListener(v -> {
             if (mOnDeleteClickListener != null) {
                 mOnDeleteClickListener.onDeleteClick(mData.get(position));
             }
+        });*/
+
+        ((ViewHolder)holder).contact_friend.setOnClickListener(v->{
+            Intent intent = new Intent();
+            intent.setClass(mContext, FriendDetailActivity.class);
+            mContext.startActivity(intent);
         });
     }
 

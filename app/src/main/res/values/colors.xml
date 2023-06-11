@@ -6,4 +6,5 @@
     <color name="transparent">#00FFFFFF</color>
     <color name="half_transparent">#1EFFFFFF</color>
     <color name="half_white">#C9FFFFFF</color>
+    <color name="green">#C900FF19</color>
 </resources>
