@@ -1,14 +1,17 @@
 package com.jsut.wechat.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jsut.wechat.Dao.ChatsDao;
@@ -32,6 +35,8 @@ public class ChatActivity extends AppCompatActivity {
 
     Button back;
 
+    LinearLayout more_menu;
+    LinearLayout chat_window;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,14 +53,15 @@ public class ChatActivity extends AppCompatActivity {
         chat_name=findViewById(R.id.chat_name);
         msg_recycle=findViewById(R.id.msg_recycle);
         back=findViewById(R.id.chat_back);
+        more_menu=findViewById(R.id.more_menu);
+        chat_window=findViewById(R.id.chat_window);
+        input = (EditText)findViewById(R.id.input_text);
+        Button send = (Button) findViewById(R.id.send);
 
         //设置控件
         chat_name.setText(chatTitle);
+        setOnTouchToCloseMoreMenu();
 
-
-        //找到输入文本和发送按钮控件
-        input = (EditText)findViewById(R.id.input_text);
-        Button send = (Button) findViewById(R.id.send);
         //信息显示
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         msg_recycle.setLayoutManager(layoutManager);
@@ -97,7 +103,63 @@ public class ChatActivity extends AppCompatActivity {
                 input.setText("");
             }
         });
-
     }
 
+    private void setOnTouchToCloseMoreMenu() {
+        //设置窗体的触摸事件来关闭抽屉
+        chat_window.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                close_more_menu();
+                return false;
+            }
+        });
+        //设置输入框的触摸事件来关闭抽屉，避免点击事件被输入框吃掉
+        input.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                close_more_menu();
+                return false;
+            }
+        });
+        //设置recycleView的触摸事件来关闭抽屉，避免点击事件被recycleView吃掉
+        msg_recycle.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                close_more_menu();
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                // 这里空着就好
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+                // 这里空着就好
+            }
+        });
+    }
+
+    public void close_more_menu(){
+        //获取more_menu参数
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) more_menu.getLayoutParams();
+        //如果更多菜单抽屉打开
+        if(params.weight==1){
+            //设置更多菜单weight为0
+            params.weight=0;
+            //更新更多菜单参数，使其关闭
+            more_menu.setLayoutParams(params);
+        }
+    }
+
+    public void open_more_menu(View view) {
+        //获取more_menu参数
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) more_menu.getLayoutParams();
+        //修改weight，从0到1或从1到0
+        params.weight=params.weight==1?0:1;
+        //设置参数，通过weight改变实现抽屉效果
+        more_menu.setLayoutParams(params);
+    }
 }
