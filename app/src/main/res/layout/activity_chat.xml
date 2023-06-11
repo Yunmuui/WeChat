@@ -55,6 +55,7 @@
             android:layout_weight="1"
             android:hint="请输入内容"
             android:maxLines="2"
+            android:textColor="@color/black"
             />
 
         <Button

@@ -2,24 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <!--    一条聊天信息-->
     <LinearLayout
         android:id="@+id/oneChat"
-        android:layout_width="match_parent"
+        android:layout_width="372dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp">
 <!--    聊天头像-->
         <androidx.constraintlayout.utils.widget.ImageFilterView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@drawable/yuge"
             app:round="10dp"/>
 <!--    聊天名称和聊天缩略-->
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2.5"
             android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
             android:orientation="vertical">
 <!--            聊天名称-->
             <TextView
@@ -28,21 +32,30 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="江苏理工学院图书馆"
-                android:textSize="25dp"/>
+                android:textSize="20dp"
+                android:maxLines="1"/>
 <!--            聊天缩略-->
             <TextView
                 android:id="@+id/chat_abbreviation"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:text="微信支付：微信支付凭证"
-                android:textColor="@color/wechat_grey"
-                android:textSize="20dp"/>
+                android:textColor="#BEBEBE"
+                android:textSize="15dp"
+                android:maxLines="1"/>
         </LinearLayout>
         <TextView
             android:id="@+id/chat_time"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="下午1:11"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="75dp"
+        android:background="#1E9E9D9D"/>
 </LinearLayout>
