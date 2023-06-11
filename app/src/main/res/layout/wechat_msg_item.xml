@@ -25,6 +25,7 @@
             android:orientation="vertical">
             <TextView
                 android:id="@+id/left_name"
+                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
@@ -32,10 +33,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
                 android:textColor="#151515"
                 android:textSize="30dp"
-                android:text="你好"
                 android:background="@drawable/message_left"/>
         </LinearLayout>
     </LinearLayout>
@@ -45,6 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
+        android:layout_margin="10dp"
         tools:ignore="RtlHardcoded">
         <LinearLayout
             android:layout_width="wrap_content"
@@ -52,6 +53,7 @@
             android:orientation="vertical">
             <TextView
                 android:id="@+id/right_name"
+                android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
@@ -59,14 +61,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
                 android:textSize="30dp"
                 android:textColor="#151515"
                 android:background="@drawable/message_right"/>
         </LinearLayout>
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@drawable/yuge"/>
     </LinearLayout>
 

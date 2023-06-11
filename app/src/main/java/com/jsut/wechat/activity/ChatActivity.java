@@ -15,6 +15,7 @@ import com.jsut.wechat.Dao.ChatsDao;
 import com.jsut.wechat.DataBase.ChatsDatabase;
 import com.jsut.wechat.Entity.Chat;
 import com.jsut.wechat.Entity.OneMsg;
+import com.jsut.wechat.Entity.User;
 import com.jsut.wechat.R;
 import com.jsut.wechat.adapter.MsgAdapter;
 import com.jsut.wechat.fragment.ChatsFragment;
@@ -61,10 +62,13 @@ public class ChatActivity extends AppCompatActivity {
         msgAdapter = new MsgAdapter(chatContent,user);
         msg_recycle.setAdapter(msgAdapter);
 
+        //打开数据库
+        ChatsDao dao = ChatsDatabase.getDatabaseInstance(ChatActivity.this).getChatsDao();
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(ChatActivity.this, ChatsFragment.class);
+                Intent intent =new Intent(ChatActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -74,8 +78,17 @@ public class ChatActivity extends AppCompatActivity {
 
             if(!"".equals(content)){
                 OneMsg msg =new OneMsg(user,chatTitle,"text",content,"0");
-                
+                //修改数据库信息
+                List<Chat> chatsList =dao.getChatsList(user);
+                Chat chat = null;
+                for(Chat chat1:chatsList){
+                    if(chat1.getId()==id){
+                         chat=chat1;
+                    }
+                }
                 chatContent.add(msg);
+                chat.chatContent=chatContent;
+                dao.updateContent(chat);
                 //当有新消息，刷新RecyclerView的显示
                 msgAdapter.notifyItemInserted(chatContent.size());
                 //将RecyclerView定位到最后一行
