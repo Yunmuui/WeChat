@@ -6,12 +6,15 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "RemoteMsg")
 public class OneMsg implements Parcelable{
     @PrimaryKey(autoGenerate = true)
     public int id;
+    @ColumnInfo(name = "chatTitle")
+    private String chatTitle;
     @ColumnInfo(name = "sender")
     @NonNull
     private String sender;
@@ -27,13 +30,29 @@ public class OneMsg implements Parcelable{
     @ColumnInfo(name = "time")
     @NonNull
     private String time;
-
+    @Ignore
     public OneMsg(@NonNull String sender, @NonNull String receiver, @NonNull String chatType, @NonNull String chatContent, @NonNull String time) {
         this.sender = sender;
         this.receiver = receiver;
         this.chatType = chatType;
         this.chatContent = chatContent;
         this.time = time;
+    }
+    public OneMsg(String chatTitle,@NonNull String sender, @NonNull String receiver, @NonNull String chatType, @NonNull String chatContent, @NonNull String time) {
+        this.chatTitle=chatTitle;
+        this.sender = sender;
+        this.receiver = receiver;
+        this.chatType = chatType;
+        this.chatContent = chatContent;
+        this.time = time;
+    }
+
+    public String getChatTitle() {
+        return chatTitle;
+    }
+
+    public void setChatTitle(String chatTitle) {
+        this.chatTitle = chatTitle;
     }
 
     public String getSender() {

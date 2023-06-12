@@ -12,6 +12,7 @@ dependencyResolutionManagement {
         maven { url 'https://maven.aliyun.com/repository/jcenter/'}
         google()
         mavenCentral()
+        jcenter()
     }
 }
 rootProject.name = "WeChat"

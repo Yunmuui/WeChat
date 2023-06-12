@@ -234,16 +234,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void login(View view) {
-        //获得editor
-        //SharedPreferences.Editor editor = mSharedPreferences.edit();
-        // 获得按钮中的文字以确定登录用户
-        String user = ((Button)view).getText().toString();
-        // 登录成功
-        Toast.makeText(this,"登录成功",Toast.LENGTH_LONG).show();
-        // 将登录状态设为user
-        mLoginViewModel.setLoginStatus(user);
-    }
+
     public void user_name(){
         Intent intent=getIntent();
         Bundle bundle = intent.getExtras();

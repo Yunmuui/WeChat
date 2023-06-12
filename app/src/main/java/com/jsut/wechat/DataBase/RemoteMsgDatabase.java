@@ -11,7 +11,7 @@ import com.jsut.wechat.Dao.RemoteMsgDao;
 import com.jsut.wechat.Entity.Chat;
 import com.jsut.wechat.Entity.OneMsg;
 
-@Database(entities = OneMsg.class,version = 1,exportSchema=false)
+@Database(entities = OneMsg.class,version = 2,exportSchema=false)
 public abstract class RemoteMsgDatabase extends RoomDatabase {
     private static RemoteMsgDatabase databaseInstance;
     private static final String DATABASE_NAME = "RemoteMsg_db";

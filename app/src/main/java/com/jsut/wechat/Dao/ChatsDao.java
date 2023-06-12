@@ -20,6 +20,9 @@ public interface ChatsDao {
     @Insert
     public void insert(Chat chat);
 
+    @Insert
+    public long insertAndReturnId(Chat chat);
+
     @Delete
     public void delete(Chat chat);
 
