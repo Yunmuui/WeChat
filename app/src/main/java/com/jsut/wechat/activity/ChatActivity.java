@@ -16,6 +16,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -428,5 +429,22 @@ public class ChatActivity extends AppCompatActivity {
         params.weight=params.weight==1?0:1;
         //设置参数，通过weight改变实现抽屉效果
         more_menu.setLayoutParams(params);
+    }
+    //语音播放
+    public void click_voice(View view) throws IOException {
+        if (((TextView) view).getText().equals("语音消息")) {
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            dao = ChatsDatabase.getDatabaseInstance(ChatActivity.this).getChatsDao();
+            int id = getIntent().getIntExtra("id", 0);
+            Chat voicechat = dao.getChatById(id);
+            List<OneMsg> voicelist = voicechat.chatContent;
+            for (OneMsg voice : voicelist) {
+                if (voice.getChatType().equals("AUDIO")) {
+                    mediaPlayer.setDataSource(stringToFileInputStream(voice.getChatContent()).getFD());
+                }
+            }
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        }
     }
 }

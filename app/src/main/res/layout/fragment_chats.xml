@@ -27,11 +27,6 @@
                 android:textStyle="bold"/>
         </androidx.appcompat.widget.Toolbar>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="发送通知"
-            android:onClick="sendNotification"/>
 
         <TextView
             android:id="@+id/show_logined_user"
