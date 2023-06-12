@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void sendNotification(View view) {
+    public void sendNotification(String title,String content) {
         //判断是否有 POST_NOTIFICATIONS 权限
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -173,8 +173,8 @@ public class MainActivity extends AppCompatActivity {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
                 //设置通知的属性(至少有3个必备属性)
                 .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle("Title")
-                .setContentText("Content")
+                .setContentTitle(title)
+                .setContentText(content)
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         /*                设置通知的属性(至少有3个必备属性)
@@ -268,6 +268,11 @@ public class MainActivity extends AppCompatActivity {
         //System.out.print(username);
         //检索远程数据库与登录用户相关信息
         List<OneMsg> far_Msglist=far_dao.getMsgList(username);
+        //发送通知
+        if (far_Msglist != null && far_Msglist.size() > 0) {
+            OneMsg lastMsg = far_Msglist.get(far_Msglist.size()-1);
+            sendNotification(lastMsg.getSender(), lastMsg.getChatContent());
+        }
 
         List<Chat> chatList=dao.getChatsListByUser(username);
         if(chatList.size()==0) {
