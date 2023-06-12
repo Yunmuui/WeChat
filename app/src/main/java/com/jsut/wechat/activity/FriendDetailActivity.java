@@ -42,18 +42,7 @@ public class FriendDetailActivity extends AppCompatActivity {
     public void sendMessageOnClick(View view) {
         Intent intent = new Intent();
         String chatTitle = tv_friendName.getText().toString();
-        List<OneMsg> chatContent = new ArrayList<>(); // 获取聊天内容
         int Id = 0 ;// 获取聊天id
-        if (chatContent.isEmpty()) {
-            ChatsDao dao = ChatsDatabase.getDatabaseInstance(getBaseContext()).getChatsDao();
-            dao.deleteAll();
-            OneMsg oneChat1 = new OneMsg("用户A", "用户B", "TEXT", "你好", "2小时前");
-            OneMsg oneChat2 = new OneMsg("用户B", "用户A", "TEXT", "你在哪", "1小时前");
-            List<OneMsg> chatContext = new ArrayList<>();
-            chatContext.add(oneChat1);
-            chatContext.add(oneChat2);
-            dao.insert(new Chat("用户A", "用户B", "你在哪", "1小时前",chatContent));
-        }
         intent.putExtra("user",username);
         intent.putExtra("chatTitle", chatTitle);
         intent.putExtra("id", Id);
