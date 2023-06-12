@@ -11,7 +11,7 @@ import com.jsut.wechat.Dao.ContactsDao;
 import com.jsut.wechat.Entity.Chat;
 import com.jsut.wechat.Entity.Contact;
 
-@Database(entities = Chat.class,version = 1,exportSchema=false)
+@Database(entities = Chat.class,version = 2,exportSchema=false)
 public abstract class ChatsDatabase extends RoomDatabase {
     private static ChatsDatabase databaseInstance;
     private static final String DATABASE_NAME = "Chats_db";
