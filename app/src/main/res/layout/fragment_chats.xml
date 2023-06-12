@@ -28,12 +28,6 @@
         </androidx.appcompat.widget.Toolbar>
 
 
-        <TextView
-            android:id="@+id/show_logined_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="登录用户:未登录"
-            android:textSize="40dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chats_recyclerView"

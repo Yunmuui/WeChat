@@ -9,30 +9,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="260dp"
         android:gravity="center">
-<!--        登录/切换-->
+
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="登录/切换:"
-            android:textSize="50dp" />
-<!--        用户A-->
-        <Button
+            android:id="@+id/show_logined_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="用户A"
-            android:textSize="40dp"
-            android:onClick="login" />
-<!--        用户B-->
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="用户B"
-            android:textSize="40dp"
-            android:onClick="login" />
+            android:gravity="center"
+            android:text="登录用户:未登录"
+            android:textSize="40dp"/>
     </LinearLayout>
 
 
