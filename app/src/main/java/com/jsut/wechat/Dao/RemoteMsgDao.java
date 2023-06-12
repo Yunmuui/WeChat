@@ -21,7 +21,8 @@ public interface RemoteMsgDao {
 
     @Delete
     void deleteAll(List<OneMsg> entities);
-
+    @Query("DELETE FROM RemoteMsg")
+    void deleteAll();
     //查询当前用户的新消息
     @Query("SELECT * FROM RemoteMsg Where receiver=:user")
     List<OneMsg> getMsgList(String user);

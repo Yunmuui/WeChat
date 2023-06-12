@@ -19,6 +19,8 @@ public interface ContactsDao {
 
     @Delete
     void deleteAll(List<Contact> entities);
+    @Query("DELETE FROM Contacts")
+    void deleteAll();
 
     @Query("SELECT * FROM Contacts Where user=:user and friend=:friend")
     List<Contact> getALLDelete(String user,String friend);

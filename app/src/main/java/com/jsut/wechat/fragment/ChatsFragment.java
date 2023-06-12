@@ -122,12 +122,6 @@ public class ChatsFragment extends Fragment {
         if(getContext()!=null){
             ChatsDao dao = ChatsDatabase.getDatabaseInstance(getContext()).getChatsDao();
             //dao.deleteAll();
-            OneMsg oneChat1 = new OneMsg("用户A", "用户B", "TEXT", "你好", "2小时前");
-            OneMsg oneChat2 = new OneMsg("用户B", "用户A", "TEXT", "你在哪", "1小时前");
-            List<OneMsg> test = new ArrayList<>();
-            test.add(oneChat1);
-            test.add(oneChat2);
-            dao.insert(new Chat("用户A", "用户B", "你在哪", "1小时前",test));
             List<Chat> chatsList = dao.getChatsListByUser(mLoginViewModel.getLoginStatus().getValue());
 
             chatsAdapter = new ChatsAdapter(new ArrayList<>(chatsList),getContext());

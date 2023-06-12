@@ -214,6 +214,17 @@ public class ChatActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if (bitmap != null) {
+                    Bitmap resized = Bitmap.createScaledBitmap(bitmap, (int)(bitmap.getWidth()*0.8), (int)(bitmap.getHeight()*0.8), true);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    resized.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] imagem_img = stream.toByteArray();
+                    while (imagem_img.length > 500000){
+                        bitmap = BitmapFactory.decodeByteArray(imagem_img, 0, imagem_img.length);
+                        resized = Bitmap.createScaledBitmap(bitmap, (int)(bitmap.getWidth()*0.8), (int)(bitmap.getHeight()*0.8), true);
+                        stream = new ByteArrayOutputStream();
+                        resized.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        imagem_img = stream.toByteArray();
+                    }
                     sendOneMsg("IMAGE", bitmapToString(bitmap));
                 } else {
                     Toast.makeText(this.getApplicationContext(), "Picture not taken!", Toast.LENGTH_SHORT).show();
