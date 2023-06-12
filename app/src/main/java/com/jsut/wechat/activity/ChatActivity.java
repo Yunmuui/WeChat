@@ -22,7 +22,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -169,16 +168,15 @@ public class ChatActivity extends AppCompatActivity {
 
         //清空输入框内容
         if("TEXT".equals(type)) input.setText("");
-
         if(!"".equals(content)){
             String[] namelist = chatTitle.split("、");
-            for(String name:namelist) {
-                if(!user.equals(name)){
-                    OneMsg msg = new OneMsg(chatTitle,user, name, type, content, "0");
-                    //插入远程数据库
-                    far_dao.insert(msg);
+                for (String name : namelist) {
+                    if (!user.equals(name)) {
+                        OneMsg msg = new OneMsg(chatTitle, user, name, type, content, "0");
+                        //插入远程数据库
+                        far_dao.insert(msg);
+                    }
                 }
-            }
             OneMsg msg = new OneMsg(user,chatTitle, type, content, "0");
                 //修改本地数据库信息
                 chat.addOneMsg(msg);
