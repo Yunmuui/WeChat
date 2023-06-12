@@ -268,9 +268,12 @@ public class MainActivity extends AppCompatActivity {
         //System.out.print(username);
         //检索远程数据库与登录用户相关信息
         List<OneMsg> far_Msglist=far_dao.getMsgList(username);
+
         List<Chat> chatList=dao.getChatsListByUser(username);
-        if(chatList==null) {
-            chatList.add(new Chat(username,null,null,null,null));
+        if(chatList.size()==0) {
+            Chat chat=new Chat(username,"","","",far_Msglist);
+            chatList.add(chat);
+            dao.insert(chat);
         }
         for(OneMsg msg:far_Msglist) {
             for (Chat one : chatList) {
@@ -281,14 +284,15 @@ public class MainActivity extends AppCompatActivity {
                     dao.updateContent(one);
                 }
                 else{
-                    Chat chat=new Chat(username, msg.getSender(),msg.getChatContent(),"0",null);
+                    List<OneMsg>mlist=new ArrayList<>();
+                    Chat chat=new Chat(username, msg.getSender(),msg.getChatContent(),"0",mlist);
                     chat.addOneMsg(msg);
-                    dao.updateContent(one);
+                    dao.insert(chat);
                 }
             }
         }
        for (Chat one : chatList){
-           if(one.chatTitle.equals(null)){
+           if(one.chatTitle.equals("")){
                dao.delete(one);
            }
        }
