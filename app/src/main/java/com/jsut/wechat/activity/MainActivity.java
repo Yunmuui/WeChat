@@ -243,6 +243,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this,"登录成功",Toast.LENGTH_LONG).show();
         // 将登录状态设为user
         mLoginViewModel.setLoginStatus(user);
+        receiver();
     }
     public void user_name(){
         Intent intent=getIntent();
