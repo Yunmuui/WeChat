@@ -1,5 +1,6 @@
 package com.jsut.wechat.activity;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,7 +9,10 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NavigationRes;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -24,9 +28,9 @@ public class WeChatMomentsActivity extends AppCompatActivity {
     private String loginStatus;
     RecyclerView recyclerView;
     WeChatAdapter weChatAdapter;
-    TextView tv_username;
 
     @Override
+    @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_we_chat_moments);
@@ -37,7 +41,7 @@ public class WeChatMomentsActivity extends AppCompatActivity {
         xStream.alias("FriendBean", FriendBean.class);  // 指定别名
         InputStream inputStream = getResources().openRawResource(R.raw.moments);
         ArrayList<FriendBean> friendList = (ArrayList<FriendBean>) xStream.fromXML(inputStream);
-        weChatAdapter = new WeChatAdapter(friendList, R.drawable.cover_image,loginStatus);
+        weChatAdapter = new WeChatAdapter(friendList, R.drawable.cover_image,loginStatus,this);
 
         //获得recyclerView
         recyclerView = findViewById(R.id.recyclerView);
@@ -76,5 +80,10 @@ public class WeChatMomentsActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && useStatusBarColor) {//android6.0以后可以对状态栏文字颜色和图标进行修改
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
+    }
+
+
+    public void friend_circle_back(View view) {
+        finish();
     }
 }

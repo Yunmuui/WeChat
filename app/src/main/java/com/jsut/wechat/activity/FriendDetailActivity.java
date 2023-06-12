@@ -60,4 +60,8 @@ public class FriendDetailActivity extends AppCompatActivity {
         intent.setClass(FriendDetailActivity.this,ChatActivity.class);
         startActivity(intent);
     }
+
+    public void friend_detail_back_onClick(View view) {
+        finish();
+    }
 }

@@ -23,7 +23,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/login_back_icon"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:onClick="friend_circle_back">
+
+
             <!--            相机-->
             <ActionMenuView
                 android:layout_width="wrap_content"

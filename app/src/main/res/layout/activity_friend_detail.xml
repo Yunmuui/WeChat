@@ -18,7 +18,8 @@
             android:layout_height="match_parent"
             android:background="@drawable/login_back_icon"
             app:backgroundTint="#090808"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:onClick="friend_detail_back_onClick"/>
         <TextView
             android:id="@+id/friend_detail_name"
             android:layout_width="280dp"

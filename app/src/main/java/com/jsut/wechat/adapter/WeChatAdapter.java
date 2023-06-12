@@ -1,11 +1,13 @@
 package com.jsut.wechat.adapter;
 
+import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.utils.widget.ImageFilterButton;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jsut.wechat.Bean.FriendBean;
 import com.jsut.wechat.R;
+import com.jsut.wechat.activity.WeChatMomentsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +32,14 @@ public class WeChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public ImageView cover;
         public TextView user;
         public ImageFilterButton profile_picture;
+/*        public Toolbar toolbar1;*/
 
         public CoverViewHolder(View v) {
             super(v);
             cover = v.findViewById(R.id.moments_cover);
             user = v.findViewById(R.id.moments_user);
             profile_picture = v.findViewById(R.id.moments_profile_picture);
+/*            toolbar1 = v.findViewById(R.id.mytoolbar);*/
         }
     }
     //item的viewholder
@@ -53,10 +58,12 @@ public class WeChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    public WeChatAdapter(ArrayList<FriendBean> data,int cover,String user) {
+    Activity activity1;
+    public WeChatAdapter(ArrayList<FriendBean> data,int cover,String user,WeChatMomentsActivity activity) {
         mData = data;
         inputCover = cover;
         inputUser = user;
+        activity1 = activity;
     }
 
     @Override
@@ -78,6 +85,12 @@ public class WeChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             // 处理封面相关逻辑
             ((CoverViewHolder) holder).cover.setImageResource(inputCover);
             ((CoverViewHolder) holder).user.setText(inputUser);
+/*            ((CoverViewHolder) holder).toolbar1.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activity1.finish();
+                }
+            });*/
         } else if (holder instanceof ItemViewHolder) {
             // 处理普通Item相关逻辑
             String friendProfilePicture = mData.get(position - 1).getFriend_profile_picture();
