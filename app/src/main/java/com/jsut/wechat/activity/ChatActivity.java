@@ -120,7 +120,7 @@ public class ChatActivity extends AppCompatActivity {
             if(!"".equals(content)){
                 OneMsg msg =new OneMsg(user,chatTitle,"TEXT",content,"0");
                 //修改本地数据库信息
-                List<Chat> chatsList =dao.getChatsList(user);
+                List<Chat> chatsList =dao.getChatsListByUser(user);
                 Chat chat = null;
                 for(Chat chat1:chatsList){
                     if(chat1.getId()==id){
@@ -151,7 +151,7 @@ public class ChatActivity extends AppCompatActivity {
         String chatting=bitmapToString(bitmap);
         OneMsg msg=new OneMsg(user,chatTitle,"IMAGE",chatting,"0");
         //修改数据库信息
-        List<Chat> chatsList =dao.getChatsList(user);
+        List<Chat> chatsList =dao.getChatsListByUser(user);
         Chat chat = null;
         for(Chat chat1:chatsList){
             if(chat1.getId()==id){
