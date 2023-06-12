@@ -283,15 +283,20 @@ public class MainActivity extends AppCompatActivity {
 //        }
         for(OneMsg msg:far_Msglist) {
             for (Chat one : chatList) {
-                if (msg.getChatTitle().equals(one.chatTitle)) {
+                if (one.chatTitle.contains(msg.getSender())) {
                     one.addOneMsg(msg);
                     abbrevuation = msg.getChatContent();
                     one.chatAbbreviation=abbrevuation;
                     dao.updateContent(one);
                 }
                 else{
+                    Chat chat;
                     List<OneMsg>mlist=new ArrayList<>();
-                    Chat chat=new Chat(username, msg.getChatTitle(),msg.getChatContent(),"0",mlist);
+                    if(msg.getChatTitle().contains("、")) {
+                        chat = new Chat(username, msg.getChatTitle(), msg.getChatContent(), "0", mlist);
+                    }else{
+                        chat=new Chat(username, msg.getSender(), msg.getChatContent(), "0", mlist);
+                    }
                     chat.addOneMsg(msg);
                     dao.insert(chat);
                 }
