@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,16 +43,26 @@ import com.jsut.wechat.R;
 import com.jsut.wechat.adapter.MsgAdapter;
 import com.jsut.wechat.fragment.ChatsFragment;
 
+import org.apache.commons.io.IOUtils;
+
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
     public static final int TAKE_PHOTO = 101;
-    public static final int CAMERA_PERMISSION_REQUEST_CODE=102;
-
+    public static final int RECORD_SOUND = 102;
+    public static final int CAMERA_PERMISSION_REQUEST_CODE=103;
+    public static final int WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE=104;
     Chat chat;
     TextView chat_name;
     RecyclerView msg_recycle;
@@ -59,8 +71,9 @@ public class ChatActivity extends AppCompatActivity {
     EditText input;
 
     Button back;
-    ImageFilterButton shoot_button;
-    private Uri imageUri;
+    ImageFilterButton shoot_button,record_button;
+    //ImageView shoot_photo;
+    private Uri imageUri,soundUri;
 
     LinearLayout more_menu;
     LinearLayout chat_window;
@@ -95,13 +108,12 @@ public class ChatActivity extends AppCompatActivity {
         input = (EditText)findViewById(R.id.input_text);
         Button send = (Button) findViewById(R.id.send);
         shoot_button = findViewById(R.id.shoot_button);
-        //shoot_photo = findViewById(R.id.shoot_photo);
+        record_button=findViewById(R.id.record_button);
 
         //设置控件
         chat_name.setText(chat.getChatTitle());
         setOnTouchToCloseMoreMenu();
-        setOnClickToShoot();
-
+        setOnClickInMoreMenu();
         //信息显示
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         msg_recycle.setLayoutManager(layoutManager);
@@ -122,6 +134,35 @@ public class ChatActivity extends AppCompatActivity {
             sendOneMsg("TEXT",input.getText().toString());
         });
     }
+
+    private void setOnClickInMoreMenu() {
+        shoot_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    //无相机权限
+                    ActivityCompat.requestPermissions(ChatActivity.this, new String[] { Manifest.permission.CAMERA }, CAMERA_PERMISSION_REQUEST_CODE);
+                }else{
+                    //有相机权限
+                    startCamera();
+                }
+            }
+        });
+
+        record_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                    //无读取权限
+                    ActivityCompat.requestPermissions(ChatActivity.this, new String[]{Manifest.permission.RECORD_AUDIO}, WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
+                } else {
+                    //有读取权限
+                    recordSound();
+                }
+            }
+        });
+    }
+
     public void sendOneMsg(String type,String content){
         String user = chat.getUser();
         String chatTitle = chat.getChatTitle();
@@ -161,18 +202,35 @@ public class ChatActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == TAKE_PHOTO) {
-            Bitmap bitmap = null;
-            try {
-                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (resultCode == RESULT_OK) {
+                Bitmap bitmap = null;
+                try {
+                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (bitmap != null) {
+                    sendOneMsg("IMAGE", bitmapToString(bitmap));
+                } else {
+                    Toast.makeText(this.getApplicationContext(), "Picture not taken!", Toast.LENGTH_SHORT).show();
+                }
             }
-            if (bitmap != null) {
-                sendOneMsg("IMAGE",bitmapToString(bitmap));
-                //shoot_photo.setImageBitmap(bitmap); // 展示刚拍过的照片
-                //getImgBase64(shoot_photo); // 直接把 imageview 取出图片转换为base64格式
-            } else {
-                Toast.makeText(this.getApplicationContext(), "Picture not taken!", Toast.LENGTH_SHORT).show();
+        } else if (requestCode == RECORD_SOUND) {
+            if (resultCode == RESULT_OK) {
+                ContentResolver contentResolver = getContentResolver();
+                try {
+                    InputStream inputStream = contentResolver.openInputStream(data.getData());
+                    if (inputStream.available() > 0) {
+                        // soundUri 包含有效的数据
+                        sendOneMsg("AUDIO", mp3ToString(data.getData()));
+                    } else {
+                        // soundUri 不包含有效的数据
+                        Toast.makeText(this.getApplicationContext(), "Audio not taken!", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    // 发生异常，说明 soundUri 无效或读取错误
+                }
             }
         }
 
@@ -213,31 +271,56 @@ public class ChatActivity extends AppCompatActivity {
         return bitmap;
     }
 
-    private void setOnClickToShoot() {
-        shoot_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    //无相机权限
-                    ActivityCompat.requestPermissions(ChatActivity.this, new String[] { Manifest.permission.CAMERA }, CAMERA_PERMISSION_REQUEST_CODE);
-                }else{
-                    //有相机权限
-                    startCamera();
-                }
-            }
-        });
+    public String mp3ToString(Uri uri){
+        try (InputStream inputStream = getContentResolver().openInputStream(uri)) {
+            byte[] bytes = IOUtils.toByteArray(inputStream);
+            String base64Encoded = Base64.encodeToString(bytes, Base64.DEFAULT);
+            return base64Encoded;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
+    public static FileInputStream stringToFileInputStream(String string) {
+        byte[] Byte = Base64.decode(string, Base64.DEFAULT);
+        try{
+            // create temp file that will hold byte array
+            File tempMp3 = File.createTempFile("temp", ".mp3");
+            tempMp3.deleteOnExit();
+            FileOutputStream fos = new FileOutputStream(tempMp3);
+            fos.write(Byte);
+            fos.close();
+
+            FileInputStream fis = new FileInputStream(tempMp3);
+            return fis;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // 相机权限已经被授予
-                startCamera();
-            } else {
-                // 相机权限被拒绝
-                Toast.makeText(this, "相机权限被拒绝", Toast.LENGTH_SHORT).show();
-            }
+        switch (requestCode) {
+            case CAMERA_PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // 相机权限已经被授予
+                    startCamera();
+                } else {
+                    // 相机权限被拒绝
+                    Toast.makeText(this, "相机权限被拒绝", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // 读写权限已经被授予
+                    recordSound();
+                } else {
+                    // 读写权限被拒绝
+                    Toast.makeText(this, "读写权限被拒绝", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 
@@ -264,6 +347,29 @@ public class ChatActivity extends AppCompatActivity {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, TAKE_PHOTO);
+    }
+
+    private void recordSound() {
+        File outputImage = new File(getExternalCacheDir(),"output_sound.mp3" );
+        try {
+            if (outputImage.exists()) {
+                outputImage.delete();
+            }
+            outputImage.createNewFile();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (Build.VERSION.SDK_INT >= 24) {
+            soundUri = FileProvider.getUriForFile(ChatActivity.this,
+                    "com.jsut.wechat.fileprovider", outputImage);
+        } else {
+            soundUri = Uri.fromFile(outputImage);
+        }
+        Intent intent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, soundUri);
+        startActivityForResult(intent,RECORD_SOUND);
     }
 
     private void setOnTouchToCloseMoreMenu() {
@@ -323,5 +429,22 @@ public class ChatActivity extends AppCompatActivity {
         params.weight=params.weight==1?0:1;
         //设置参数，通过weight改变实现抽屉效果
         more_menu.setLayoutParams(params);
+    }
+    //语音播放
+    public void click_voice(View view) throws IOException {
+        if (((TextView) view).getText().equals("语音消息")) {
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            dao = ChatsDatabase.getDatabaseInstance(ChatActivity.this).getChatsDao();
+            int id = getIntent().getIntExtra("id", 0);
+            Chat voicechat = dao.getChatById(id);
+            List<OneMsg> voicelist = voicechat.chatContent;
+            for (OneMsg voice : voicelist) {
+                if (voice.getChatType().equals("AUDIO")) {
+                    mediaPlayer.setDataSource(stringToFileInputStream(voice.getChatContent()).getFD());
+                }
+            }
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        }
     }
 }

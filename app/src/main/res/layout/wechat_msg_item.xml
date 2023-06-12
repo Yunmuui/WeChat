@@ -78,7 +78,8 @@
                 android:maxWidth="260dp"
                 android:scrollHorizontally="true"
                 android:singleLine="false"
-                android:background="@drawable/message_right"/>
+                android:background="@drawable/message_right"
+                android:onClick="click_voice"/>
             <ImageView
                 android:id="@+id/right_image"
                 android:layout_width="wrap_content"

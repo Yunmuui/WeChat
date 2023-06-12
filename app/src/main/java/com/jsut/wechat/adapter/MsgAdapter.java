@@ -71,10 +71,14 @@ public class MsgAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             if(msg.getChatType().equals("TEXT")) {
                 ((ViewHolder) holder).leftMsg.setText(msg.getChatContent());
                 ((ViewHolder) holder).leftImage.setVisibility(View.GONE);
-            }else{
+            }else if(msg.getChatType().equals("IMAGE")){
                 Bitmap bitmap= ChatActivity.stringtoBitmap(msg.getChatContent());
                 ((ViewHolder) holder).leftImage.setImageBitmap(bitmap);
                 ((ViewHolder) holder).leftMsg.setVisibility(View.GONE);
+            }
+            else {
+                ((ViewHolder) holder).leftImage.setVisibility(View.GONE);
+                ((ViewHolder) holder).leftMsg.setText("语音消息");
             }
             ((ViewHolder) holder).leftname.setText(msg.getSender());
         }else if(msg.getSender().equals(user)){
@@ -83,10 +87,14 @@ public class MsgAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             if(msg.getChatType().equals("TEXT")) {
                 ((ViewHolder) holder).rightMsg.setText(msg.getChatContent());
                 ((ViewHolder) holder).rightImage.setVisibility(View.GONE);
-            }else{
+            }else if(msg.getChatType().equals("IMAGE")){
                 Bitmap bitmap= ChatActivity.stringtoBitmap(msg.getChatContent());
                 ((ViewHolder) holder).rightImage.setImageBitmap(bitmap);
                 ((ViewHolder) holder).rightMsg.setVisibility(View.GONE);
+            }
+            else{
+                ((ViewHolder) holder).rightImage.setVisibility(View.GONE);
+                ((ViewHolder) holder).rightMsg.setText("语音消息");
             }
             ((ViewHolder) holder).rightname.setText(msg.getSender());
         }
