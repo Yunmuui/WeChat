@@ -42,8 +42,9 @@
                 android:id="@+id/left_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxWidth="80dp"
-                android:maxHeight="80dp"
+                android:adjustViewBounds="true"
+                android:maxWidth="200dp"
+                android:maxHeight="240dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"/>
         </LinearLayout>
@@ -82,10 +83,12 @@
                 android:id="@+id/right_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxWidth="80dp"
-                android:maxHeight="80dp"
+                android:adjustViewBounds="true"
+                android:maxWidth="200dp"
+                android:maxHeight="240dp"
                 android:layout_gravity="center"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:scaleType="fitCenter"/>
         </LinearLayout>
         <ImageView
             android:layout_width="60dp"
