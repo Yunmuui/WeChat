@@ -10,20 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
-import android.annotation.TargetApi;
-import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -237,7 +231,9 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         }
+
     }
+
 
     /**
      * imageview取出图片转换为base64格式
@@ -320,7 +316,6 @@ public class ChatActivity extends AppCompatActivity {
                     recordSound();
                 } else {
                     // 读写权限被拒绝
-                    recordSound();
                     Toast.makeText(this, "读写权限被拒绝", Toast.LENGTH_SHORT).show();
                 }
                 break;
