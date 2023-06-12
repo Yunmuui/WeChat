@@ -273,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
         }
         for(OneMsg msg:far_Msglist) {
             for (Chat one : chatList) {
-                if (msg.getSender().equals(one.chatTitle)) {
+                if (msg.getChatTitle().equals(one.chatTitle)) {
                     one.addOneMsg(msg);
                     abbrevuation = msg.getChatContent();
                     one.chatAbbreviation=abbrevuation;
@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else{
                     List<OneMsg>mlist=new ArrayList<>();
-                    Chat chat=new Chat(username, msg.getSender(),msg.getChatContent(),"0",mlist);
+                    Chat chat=new Chat(username, msg.getChatTitle(),msg.getChatContent(),"0",mlist);
                     chat.addOneMsg(msg);
                     dao.insert(chat);
                 }

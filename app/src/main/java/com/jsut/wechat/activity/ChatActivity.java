@@ -171,16 +171,22 @@ public class ChatActivity extends AppCompatActivity {
         if("TEXT".equals(type)) input.setText("");
 
         if(!"".equals(content)){
-            OneMsg msg =new OneMsg(user,chatTitle,type,content,"0");
-            //修改本地数据库信息
-            chat.addOneMsg(msg);
-            dao.updateContent(chat);
-            //插入远程数据库
-            far_dao.insert(msg);
-            //当有新消息，刷新RecyclerView的显示
-            msgAdapter.notifyItemInserted(chat.getChatContent().size());
-            //将RecyclerView定位到最后一行
-            msg_recycle.scrollToPosition(chat.getChatContent().size());
+            String[] namelist = chatTitle.split("、");
+            for(String name:namelist) {
+                if(!user.equals(name)){
+                    OneMsg msg = new OneMsg(chatTitle,user, name, type, content, "0");
+                    //插入远程数据库
+                    far_dao.insert(msg);
+                }
+            }
+            OneMsg msg = new OneMsg(user,chatTitle, type, content, "0");
+                //修改本地数据库信息
+                chat.addOneMsg(msg);
+                dao.updateContent(chat);
+                //当有新消息，刷新RecyclerView的显示
+                msgAdapter.notifyItemInserted(chat.getChatContent().size());
+                //将RecyclerView定位到最后一行
+                msg_recycle.scrollToPosition(chat.getChatContent().size());
         }
     }
 

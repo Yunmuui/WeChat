@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -31,6 +32,9 @@ public class MeFragment extends Fragment {
 
     private SharedPreferences mSharedPreferences;
     private LoginViewModel mLoginViewModel;
+
+    TextView mUserNameTextView;
+
 
     /**
      * Use this factory method to create a new instance of
@@ -69,7 +73,15 @@ public class MeFragment extends Fragment {
         // Inflate the layout for this fragment
         // 获取 ViewModel 实例
         mLoginViewModel = new ViewModelProvider(getActivity()).get(LoginViewModel.class);
-        return inflater.inflate(R.layout.fragment_me, container, false);
+        View view = inflater.inflate(R.layout.fragment_me, container, false);
+
+
+        // 找到textview
+        mUserNameTextView = view.findViewById(R.id.show_logined_user);
+        // 观察 LiveData，并在状态改变时更新 TextView 组件的文本内容
+        mLoginViewModel.getLoginStatus().observe(getViewLifecycleOwner(), loginStatus -> mUserNameTextView.setText("登录用户:"+loginStatus));
+
+        return view;
     }
 
 }
