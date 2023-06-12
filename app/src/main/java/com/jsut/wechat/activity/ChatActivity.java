@@ -87,7 +87,7 @@ public class ChatActivity extends AppCompatActivity {
                 OneMsg msg =new OneMsg(user,chatTitle,"text",content,"0");
                 //修改数据库信息
                 List<Chat> chatsList =dao.getChatsList(user);
-                Chat chat = null;
+                Chat chat = new Chat();
                 for(Chat chat1:chatsList){
                     if(chat1.getId()==id){
                          chat=chat1;
