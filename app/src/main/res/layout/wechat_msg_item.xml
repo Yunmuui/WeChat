@@ -38,6 +38,14 @@
                 android:textSize="30dp"
                 android:text=""
                 android:background="@drawable/message_left"/>
+            <ImageView
+                android:id="@+id/left_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="80dp"
+                android:maxHeight="80dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -66,10 +74,18 @@
                 android:layout_marginRight="10dp"
                 android:textSize="30dp"
                 android:textColor="#151515"
-                android:maxWidth="300dp"
+                android:maxWidth="260dp"
                 android:scrollHorizontally="true"
                 android:singleLine="false"
                 android:background="@drawable/message_right"/>
+            <ImageView
+                android:id="@+id/right_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="80dp"
+                android:maxHeight="80dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"/>
         </LinearLayout>
         <ImageView
             android:layout_width="60dp"

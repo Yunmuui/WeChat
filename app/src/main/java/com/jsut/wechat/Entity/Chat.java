@@ -55,6 +55,9 @@ public class Chat {
         this.chatContent = chatContent;
     }
 
+    public void addOneMsg(OneMsg e){
+        chatContent.add(e);
+    }
     @Ignore
     public Chat() {
 

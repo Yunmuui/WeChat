@@ -65,14 +65,12 @@ public class ChatsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             public void onClick(View v) {
                 String user = mData.get(position).getUser();
                 String chatTitle = mData.get(position).getChatTitle(); // 获取聊天标题
-                List<OneMsg> chatContent = mData.get(position).getChatContent(); // 获取聊天内容
                 int Id = mData.get(position).getId(); // 获取聊天id
 
                 // 创建Intent对象，并传递参数
                 Intent intent = new Intent(mContext, ChatActivity.class);
                 intent.putExtra("user", user);
                 intent.putExtra("chatTitle", chatTitle);
-                intent.putParcelableArrayListExtra("chatContent",new ArrayList<>(chatContent));
                 intent.putExtra("id", Id);
 
                 mContext.startActivity(intent); // 启动ChatActivity

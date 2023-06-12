@@ -32,7 +32,11 @@ public interface ChatsDao {
 //
     //查询用户本地聊天记录
     @Query("SELECT * FROM Chats Where user=:user")
-    List<Chat> getChatsList(String user);
+    List<Chat> getChatsListByUser(String user);
+
+    //查询用户本地聊天记录
+    @Query("SELECT * FROM Chats Where id=:id")
+    Chat getChatById(int id);
 
     //更新本地聊天记录
     @Update
