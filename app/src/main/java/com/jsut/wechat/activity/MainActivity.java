@@ -28,9 +28,11 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jsut.wechat.Dao.ChatsDao;
+import com.jsut.wechat.Dao.ContactsDao;
 import com.jsut.wechat.Dao.RemoteMsgDao;
 import com.jsut.wechat.Dao.UserDao;
 import com.jsut.wechat.DataBase.ChatsDatabase;
+import com.jsut.wechat.DataBase.ContactsDataBase;
 import com.jsut.wechat.DataBase.RemoteMsgDatabase;
 import com.jsut.wechat.DataBase.UserDatabase;
 import com.jsut.wechat.Entity.Chat;
@@ -61,6 +63,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ChatsDao daoa = ChatsDatabase.getDatabaseInstance(MainActivity.this).getChatsDao();
+        ContactsDao daob = ContactsDataBase.getDatabaseInstance(MainActivity.this).getContactsDao();
+        RemoteMsgDao daoc = RemoteMsgDatabase.getDatabaseInstance(MainActivity.this).getRemoteMsgDao();
+        UserDao daod = UserDatabase.getDatabaseInstance(MainActivity.this).getUserDao();
+        //daoa.deleteAll();
+        //daob.deleteAll();
+        //daoc.deleteAll();
+        //daod.deleteAll();
         //设置状态栏
         setStatusBar();
 
@@ -266,11 +276,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         List<Chat> chatList=dao.getChatsListByUser(username);
-        if(chatList.size()==0) {
-            Chat chat=new Chat(username,"","","",far_Msglist);
-            chatList.add(chat);
-            dao.insert(chat);
-        }
+//        if(chatList.size()==0) {
+//            Chat chat=new Chat(username,"","","",far_Msglist);
+//            chatList.add(chat);
+//            dao.insert(chat);
+//        }
         for(OneMsg msg:far_Msglist) {
             for (Chat one : chatList) {
                 if (msg.getChatTitle().equals(one.chatTitle)) {

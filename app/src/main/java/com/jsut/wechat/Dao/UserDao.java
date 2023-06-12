@@ -26,6 +26,8 @@ public interface UserDao {
     //查
     @Query("SELECT * FROM User where id= :id")
     List<User> getallUserById(int id);
+    @Query("DELETE FROM User")
+    void deleteAll();
 
     @Query("SELECT * FROM User where name= :name")
     List<User> getallUserByName(String name);
