@@ -282,6 +282,7 @@ public class MainActivity extends AppCompatActivity {
 //            dao.insert(chat);
 //        }
         for(OneMsg msg:far_Msglist) {
+            chatList=dao.getChatsListByUser(username);
             if(msg.getChatTitle().length()>username.length()){
                 //群聊
                 boolean isFind=false;
@@ -304,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
                 //单聊
                 boolean isFind=false;
                 for (Chat one : chatList){
-                    if(msg.getChatTitle().equals(one.chatTitle)){
+                    if(msg.getChatTitle().equals(one.getUser())){
                         one.addOneMsg(msg);
                         abbrevuation = msg.getChatContent();
                         one.chatAbbreviation=abbrevuation;

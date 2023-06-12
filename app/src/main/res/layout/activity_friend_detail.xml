@@ -9,6 +9,7 @@
 
     <!--1、返回键-->
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal">
@@ -24,7 +25,7 @@
             android:id="@+id/friend_detail_name"
             android:layout_width="280dp"
             android:layout_height="match_parent"
-            android:text="标题"
+            android:text="好友"
             android:textSize="30dp"
             android:textAlignment="center"
             android:layout_weight="6"/>
@@ -53,12 +54,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginLeft="20dp">
-            <TextView
-                android:id="@+id/remark"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="22dp"
-                android:maxLines="1"/>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">

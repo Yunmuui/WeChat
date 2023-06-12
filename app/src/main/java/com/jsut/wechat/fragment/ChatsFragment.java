@@ -193,7 +193,7 @@ public class ChatsFragment extends Fragment {
                                 }
                                 if (!flag){
                                     Chat chat = new Chat(mLoginViewModel.getLoginStatus().getValue(), String.join("、", selectedItems), "", "0", new ArrayList<OneMsg>());
-                                    long id = dao.insertAndReturnId(chat);
+                                    int id = (int) dao.insertAndReturnId(chat);
                                     Intent intent = new Intent();
                                     intent.putExtra("user",mLoginViewModel.getLoginStatus().getValue());
                                     intent.putExtra("chatTitle", chat.getChatTitle());

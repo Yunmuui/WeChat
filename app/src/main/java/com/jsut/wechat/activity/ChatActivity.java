@@ -24,6 +24,8 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -110,7 +112,7 @@ public class ChatActivity extends AppCompatActivity {
         record_button=findViewById(R.id.record_button);
 
         //设置控件
-        //chat_name.setText(chat.getChatTitle());
+        chat_name.setText(chat.getChatTitle());
         setOnTouchToCloseMoreMenu();
         setOnClickInMoreMenu();
         //信息显示
@@ -132,6 +134,19 @@ public class ChatActivity extends AppCompatActivity {
         send.setOnClickListener(v -> {
             sendOneMsg("TEXT",input.getText().toString());
         });
+        //设置状态栏颜色
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = this.getWindow();
+            ((Window) window).addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(this.getResources().getColor(R.color.wechat_grey));
+
+        }
+        //设置状态栏图标颜色
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
     }
 
     private void setOnClickInMoreMenu() {
@@ -181,7 +196,7 @@ public class ChatActivity extends AppCompatActivity {
             //修改本地数据库信息
             chat.addOneMsg(msg);
             if(dao.updateContent(chat)==0){
-                dao.insert(chat);
+                chat.id =(int) dao.insertAndReturnId(chat);
             }
             //当有新消息，刷新RecyclerView的显示
             msgAdapter.notifyItemInserted(chat.getChatContent().size());

@@ -166,7 +166,7 @@ public class DiscoverFragment extends Fragment {
                                     selectedItems.add(items[i]);
                                 }
                             }
-
+                            selectedItems.add(mLoginViewModel.getLoginStatus().getValue());
                             if(count>0){
                                 ChatsDao dao = ChatsDatabase.getDatabaseInstance(getContext()).getChatsDao();
                                 List<Chat> chatList = dao.getChatsListByUser(mLoginViewModel.getLoginStatus().getValue());
