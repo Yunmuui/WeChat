@@ -96,15 +96,16 @@
             android:layout_marginLeft="30dp"
             android:orientation="vertical">
             <androidx.constraintlayout.utils.widget.ImageFilterButton
+                android:id="@+id/record_button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 app:round="10dp"
-                android:background="@drawable/more_menu_album"/>
+                android:background="@drawable/more_menu_record"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="相册"/>
+                android:text="录音"/>
         </LinearLayout>
         <!--        拍摄-->
         <LinearLayout
