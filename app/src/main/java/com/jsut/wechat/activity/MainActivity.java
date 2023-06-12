@@ -264,12 +264,14 @@ public class MainActivity extends AppCompatActivity {
         ChatsDao dao = ChatsDatabase.getDatabaseInstance(MainActivity.this).getChatsDao();
         RemoteMsgDao far_dao= RemoteMsgDatabase.getDatabaseInstance(MainActivity.this).getRemoteMsgDao();
         //查询正在登录用户
-        String username=String.valueOf(mLoginViewModel.getLoginStatus());
+        String username=String.valueOf(mLoginViewModel.getLoginStatus().getValue());
         //System.out.print(username);
         //检索远程数据库与登录用户相关信息
         List<OneMsg> far_Msglist=far_dao.getMsgList(username);
         List<Chat> chatList=dao.getChatsListByUser(username);
-        //修改本地数据库信息
+        if(chatList==null) {
+            chatList.add(new Chat(username,null,null,null,null));
+        }
         for(OneMsg msg:far_Msglist) {
             for (Chat one : chatList) {
                 if (msg.getSender().equals(one.chatTitle)) {
@@ -278,8 +280,18 @@ public class MainActivity extends AppCompatActivity {
                     one.chatAbbreviation=abbrevuation;
                     dao.updateContent(one);
                 }
+                else{
+                    Chat chat=new Chat(username, msg.getSender(),msg.getChatContent(),"0",null);
+                    chat.addOneMsg(msg);
+                    dao.updateContent(one);
+                }
             }
         }
+       for (Chat one : chatList){
+           if(one.chatTitle.equals(null)){
+               dao.delete(one);
+           }
+       }
         //删除远程数据库内容
         far_dao.deleteAll(far_Msglist);
     }
