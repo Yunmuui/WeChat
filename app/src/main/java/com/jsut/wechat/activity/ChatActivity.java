@@ -110,7 +110,7 @@ public class ChatActivity extends AppCompatActivity {
         record_button=findViewById(R.id.record_button);
 
         //设置控件
-        chat_name.setText(chat.getChatTitle());
+        //chat_name.setText(chat.getChatTitle());
         setOnTouchToCloseMoreMenu();
         setOnClickInMoreMenu();
         //信息显示
@@ -170,21 +170,23 @@ public class ChatActivity extends AppCompatActivity {
         if("TEXT".equals(type)) input.setText("");
         if(!"".equals(content)){
             String[] namelist = chatTitle.split("、");
-                for (String name : namelist) {
-                    if (!user.equals(name)) {
-                        OneMsg msg = new OneMsg(chatTitle, user, name, type, content, "0");
-                        //插入远程数据库
-                        far_dao.insert(msg);
-                    }
+            for (String name : namelist) {
+                if (!user.equals(name)) {
+                    OneMsg msg = new OneMsg(chatTitle, user, name, type, content, "0");
+                    //插入远程数据库
+                    far_dao.insert(msg);
                 }
+            }
             OneMsg msg = new OneMsg(user,chatTitle, type, content, "0");
-                //修改本地数据库信息
-                chat.addOneMsg(msg);
-                dao.updateContent(chat);
-                //当有新消息，刷新RecyclerView的显示
-                msgAdapter.notifyItemInserted(chat.getChatContent().size());
-                //将RecyclerView定位到最后一行
-                msg_recycle.scrollToPosition(chat.getChatContent().size());
+            //修改本地数据库信息
+            chat.addOneMsg(msg);
+            if(dao.updateContent(chat)==0){
+                dao.insert(chat);
+            }
+            //当有新消息，刷新RecyclerView的显示
+            msgAdapter.notifyItemInserted(chat.getChatContent().size());
+            //将RecyclerView定位到最后一行
+            msg_recycle.scrollToPosition(chat.getChatContent().size());
         }
     }
 

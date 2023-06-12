@@ -12,6 +12,7 @@ import androidx.room.TypeConverters;
 
 import com.jsut.wechat.Converter.ChatTypeConverters;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(tableName = "Chats")
@@ -54,7 +55,6 @@ public class Chat {
         this.chatTime = chatTime;
         this.chatContent = chatContent;
     }
-
     public void addOneMsg(OneMsg e){
         chatContent.add(e);
     }

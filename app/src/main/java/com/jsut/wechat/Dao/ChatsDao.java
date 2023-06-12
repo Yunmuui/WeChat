@@ -47,5 +47,5 @@ public interface ChatsDao {
 
     //更新本地聊天记录
     @Update
-    void updateContent(Chat newChat);
+    int updateContent(Chat newChat);
 }

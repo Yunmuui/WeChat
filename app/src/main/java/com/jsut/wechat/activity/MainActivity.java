@@ -67,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
         ContactsDao daob = ContactsDataBase.getDatabaseInstance(MainActivity.this).getContactsDao();
         RemoteMsgDao daoc = RemoteMsgDatabase.getDatabaseInstance(MainActivity.this).getRemoteMsgDao();
         UserDao daod = UserDatabase.getDatabaseInstance(MainActivity.this).getUserDao();
-        //daoa.deleteAll();
-        //daob.deleteAll();
-        //daoc.deleteAll();
-        //daod.deleteAll();
+//        daoa.deleteAll();
+//        daob.deleteAll();
+//        daoc.deleteAll();
+//        daod.deleteAll();
         //设置状态栏
         setStatusBar();
 
@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void receiver(){
-        String abbrevuation = null;
+        String abbrevuation ="";
         UserDao userDao = UserDatabase.getDatabaseInstance(MainActivity.this).getUserDao();
         ChatsDao dao = ChatsDatabase.getDatabaseInstance(MainActivity.this).getChatsDao();
         RemoteMsgDao far_dao= RemoteMsgDatabase.getDatabaseInstance(MainActivity.this).getRemoteMsgDao();
@@ -282,31 +282,45 @@ public class MainActivity extends AppCompatActivity {
 //            dao.insert(chat);
 //        }
         for(OneMsg msg:far_Msglist) {
-            for (Chat one : chatList) {
-                if (one.chatTitle.contains(msg.getSender())) {
-                    one.addOneMsg(msg);
-                    abbrevuation = msg.getChatContent();
-                    one.chatAbbreviation=abbrevuation;
-                    dao.updateContent(one);
-                }
-                else{
-                    Chat chat;
-                    List<OneMsg>mlist=new ArrayList<>();
-                    if(msg.getChatTitle().contains("、")) {
-                        chat = new Chat(username, msg.getChatTitle(), msg.getChatContent(), "0", mlist);
-                    }else{
-                        chat=new Chat(username, msg.getSender(), msg.getChatContent(), "0", mlist);
+            if(msg.getChatTitle().length()>username.length()){
+                //群聊
+                boolean isFind=false;
+                for (Chat one : chatList){
+                    if(msg.getChatTitle().equals(one.chatTitle)){
+                        one.addOneMsg(msg);
+                        abbrevuation = msg.getChatContent();
+                        one.chatAbbreviation=abbrevuation;
+                        dao.updateContent(one);
+                        isFind=true;
+                        break;
                     }
-                    chat.addOneMsg(msg);
-                    dao.insert(chat);
+                }
+                if(isFind==false){
+                    Chat newChat=new Chat(username,msg.getChatTitle(),msg.getChatContent(),"0",new ArrayList<>());
+                    newChat.addOneMsg(msg);
+                    dao.insert(newChat);
+                }
+            }else{
+                //单聊
+                boolean isFind=false;
+                for (Chat one : chatList){
+                    if(msg.getChatTitle().equals(one.chatTitle)){
+                        one.addOneMsg(msg);
+                        abbrevuation = msg.getChatContent();
+                        one.chatAbbreviation=abbrevuation;
+                        dao.updateContent(one);
+                        isFind=true;
+                        break;
+                    }
+                }
+                if(isFind==false){
+                    Chat newChat=new Chat(username,msg.getSender(),msg.getChatContent(),"0",new ArrayList<>());
+                    newChat.addOneMsg(msg);
+                    dao.insert(newChat);
                 }
             }
+
         }
-       for (Chat one : chatList){
-           if(one.chatTitle.equals("")){
-               dao.delete(one);
-           }
-       }
         //删除远程数据库内容
         far_dao.deleteAll(far_Msglist);
     }
