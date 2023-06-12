@@ -44,13 +44,15 @@ import com.jsut.wechat.fragment.ChatsFragment;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
     public static final int TAKE_PHOTO = 101;
     public static final int CAMERA_PERMISSION_REQUEST_CODE=102;
+
+    Chat chat;
     TextView chat_name;
-    String user;
     RecyclerView msg_recycle;
 
     MsgAdapter msgAdapter;
@@ -71,12 +73,19 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        //打开数据库
+        dao = ChatsDatabase.getDatabaseInstance(ChatActivity.this).getChatsDao();
+        far_dao= RemoteMsgDatabase.getDatabaseInstance(ChatActivity.this).getRemoteMsgDao();
+
         // 获取传递的参数
-        user = getIntent().getStringExtra("user");
-        String chatTitle = getIntent().getStringExtra("chatTitle");
-        List<OneMsg> chatContent = getIntent().getParcelableArrayListExtra("chatContent");
-        //System.out.println(chatContent.get(0).getChatContent());
         int id = getIntent().getIntExtra("id", 0);
+        if(id>0){
+            chat = dao.getChatById(id);
+        }else{
+            chat = new Chat(getIntent().getStringExtra("user"),
+                    getIntent().getStringExtra("chatTitle"),
+                    "","",new ArrayList<OneMsg>());
+        }
 
         //获取控件
         chat_name=findViewById(R.id.chat_name);
@@ -89,19 +98,15 @@ public class ChatActivity extends AppCompatActivity {
         shoot_button = findViewById(R.id.shoot_button);
         //shoot_photo = findViewById(R.id.shoot_photo);
 
-        //打开数据库
-        dao = ChatsDatabase.getDatabaseInstance(ChatActivity.this).getChatsDao();
-        far_dao= RemoteMsgDatabase.getDatabaseInstance(ChatActivity.this).getRemoteMsgDao();
-
         //设置控件
-        chat_name.setText(chatTitle);
+        chat_name.setText(chat.getChatTitle());
         setOnTouchToCloseMoreMenu();
         setOnClickToShoot();
 
         //信息显示
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         msg_recycle.setLayoutManager(layoutManager);
-        msgAdapter = new MsgAdapter(chatContent,user);
+        msgAdapter = new MsgAdapter(chat.getChatContent(),chat.getUser());
         msg_recycle.setAdapter(msgAdapter);
 
 
@@ -115,60 +120,30 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         send.setOnClickListener(v -> {
-            String content = input.getText().toString();
-
-            if(!"".equals(content)){
-                OneMsg msg =new OneMsg(user,chatTitle,"TEXT",content,"0");
-                //修改本地数据库信息
-                List<Chat> chatsList =dao.getChatsListByUser(user);
-                Chat chat = null;
-                for(Chat chat1:chatsList){
-                    if(chat1.getId()==id){
-                         chat=chat1;
-                    }
-                }
-                chatContent.add(msg);
-                chat.chatContent=chatContent;
-                dao.updateContent(chat);
-                //插入远程数据库
-                far_dao.insert(msg);
-
-                //当有新消息，刷新RecyclerView的显示
-                msgAdapter.notifyItemInserted(chatContent.size());
-                //将RecyclerView定位到最后一行
-                msg_recycle.scrollToPosition(chatContent.size());
-                //清空输入框内容
-                input.setText("");
-            }
+            sendOneMsg("TEXT",input.getText().toString());
         });
     }
+    public void sendOneMsg(String type,String content){
+        String user = chat.getUser();
+        String chatTitle = chat.getChatTitle();
 
-    public void adddImage(Bitmap bitmap){
-        String chatTitle = getIntent().getStringExtra("chatTitle");
-        List<OneMsg> chatContent = getIntent().getParcelableArrayListExtra("chatContent");
-        int id = getIntent().getIntExtra("id", 0);
+        //清空输入框内容
+        if("TEXT".equals(type)) input.setText("");
 
-        String chatting=bitmapToString(bitmap);
-        OneMsg msg=new OneMsg(user,chatTitle,"IMAGE",chatting,"0");
-        //修改数据库信息
-        List<Chat> chatsList =dao.getChatsListByUser(user);
-        Chat chat = null;
-        for(Chat chat1:chatsList){
-            if(chat1.getId()==id){
-                chat=chat1;
-            }
+        if(!"".equals(content)){
+            OneMsg msg =new OneMsg(user,chatTitle,type,content,"0");
+            //修改本地数据库信息
+            chat.addOneMsg(msg);
+            dao.updateContent(chat);
+            //插入远程数据库
+            far_dao.insert(msg);
+            //当有新消息，刷新RecyclerView的显示
+            msgAdapter.notifyItemInserted(chat.getChatContent().size());
+            //将RecyclerView定位到最后一行
+            msg_recycle.scrollToPosition(chat.getChatContent().size());
         }
-        chatContent.add(msg);
-        chat.chatContent=chatContent;
-        dao.updateContent(chat);
-        //插入远程数据库
-        far_dao.insert(msg);
-        //当有新消息，刷新RecyclerView的显示
-        msgAdapter.notifyItemInserted(chatContent.size());
-        //将RecyclerView定位到最后一行
-        msg_recycle.scrollToPosition(chatContent.size());
-
     }
+
     public static String bitmapToString(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
@@ -194,7 +169,7 @@ public class ChatActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             if (bitmap != null) {
-                adddImage(bitmap);
+                sendOneMsg("IMAGE",bitmapToString(bitmap));
                 //shoot_photo.setImageBitmap(bitmap); // 展示刚拍过的照片
                 //getImgBase64(shoot_photo); // 直接把 imageview 取出图片转换为base64格式
             } else {
