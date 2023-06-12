@@ -60,7 +60,6 @@ public class ChatActivity extends AppCompatActivity {
 
     Button back;
     ImageFilterButton shoot_button;
-    //ImageView shoot_photo;
     private Uri imageUri;
 
     LinearLayout more_menu;

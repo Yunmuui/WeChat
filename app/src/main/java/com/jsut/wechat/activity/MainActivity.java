@@ -27,8 +27,14 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.jsut.wechat.Dao.ChatsDao;
+import com.jsut.wechat.Dao.RemoteMsgDao;
 import com.jsut.wechat.Dao.UserDao;
+import com.jsut.wechat.DataBase.ChatsDatabase;
+import com.jsut.wechat.DataBase.RemoteMsgDatabase;
 import com.jsut.wechat.DataBase.UserDatabase;
+import com.jsut.wechat.Entity.Chat;
+import com.jsut.wechat.Entity.OneMsg;
 import com.jsut.wechat.Entity.User;
 import com.jsut.wechat.R;
 import com.jsut.wechat.fragment.ChatsFragment;
@@ -63,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
         //用户登陆显示
         user_name();
+        //更新本地数据库
+        receiver();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         viewPager=findViewById(R.id.viewpager);
@@ -248,5 +256,31 @@ public class MainActivity extends AppCompatActivity {
                 mLoginViewModel.setLoginStatus(user1.name);
             }
         }
+    }
+
+    public void receiver(){
+        String abbrevuation = null;
+        UserDao userDao = UserDatabase.getDatabaseInstance(MainActivity.this).getUserDao();
+        ChatsDao dao = ChatsDatabase.getDatabaseInstance(MainActivity.this).getChatsDao();
+        RemoteMsgDao far_dao= RemoteMsgDatabase.getDatabaseInstance(MainActivity.this).getRemoteMsgDao();
+        //查询正在登录用户
+        String username=String.valueOf(mLoginViewModel.getLoginStatus());
+        //System.out.print(username);
+        //检索远程数据库与登录用户相关信息
+        List<OneMsg> far_Msglist=far_dao.getMsgList(username);
+        List<Chat> chatList=dao.getChatsListByUser(username);
+        //修改本地数据库信息
+        for(OneMsg msg:far_Msglist) {
+            for (Chat one : chatList) {
+                if (msg.getSender().equals(one.chatTitle)) {
+                    one.addOneMsg(msg);
+                    abbrevuation = msg.getChatContent();
+                    one.chatAbbreviation=abbrevuation;
+                    dao.updateContent(one);
+                }
+            }
+        }
+        //删除远程数据库内容
+        far_dao.deleteAll(far_Msglist);
     }
 }
