@@ -37,10 +37,12 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
     public Context mContext;
+    public String username1;
 
-    public ContactsAdapter(ArrayList<String> data, Context context) {
+    public ContactsAdapter(ArrayList<String> data, Context context,String username) {
         mData = data;
         mContext = context;
+        username1 = username;
     }
 
     @Override
@@ -64,6 +66,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ((ViewHolder)holder).contact_friend.setOnClickListener(v->{
             Intent intent = new Intent();
             intent.putExtra("friendName",mData.get(position));
+            intent.putExtra("username",username1);
             intent.setClass(mContext, FriendDetailActivity.class);
             mContext.startActivity(intent);
         });

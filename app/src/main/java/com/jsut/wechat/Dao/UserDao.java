@@ -27,6 +27,9 @@ public interface UserDao {
     @Query("SELECT * FROM User where id= :id")
     List<User> getallUserById(int id);
 
+    @Query("SELECT * FROM User where name= :name")
+    List<User> getallUserByName(String name);
+
     @Query("SELECT * FROM User where phone like  '%'||:phone||'%'")
     List<User> getallUserByPhone(String phone) ;
 

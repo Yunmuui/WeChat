@@ -95,7 +95,8 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnDele
         if(getContext()!=null){
             ContactsDao dao = ContactsDataBase.getDatabaseInstance(getContext()).getContactsDao();
             List<String> friendList = dao.getFriendList(mLoginViewModel.getLoginStatus().getValue());
-            contactsAdapter = new ContactsAdapter(new ArrayList<>(friendList),getContext());
+            String username= mLoginViewModel.getLoginStatus().getValue();
+            contactsAdapter = new ContactsAdapter(new ArrayList<>(friendList),getContext(),username);
             contactsAdapter.setOnDeleteClickListener(this);
             recyclerView.setAdapter(contactsAdapter);
             recyclerView.setNestedScrollingEnabled(false);
