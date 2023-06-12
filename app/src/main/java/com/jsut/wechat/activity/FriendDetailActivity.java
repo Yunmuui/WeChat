@@ -41,13 +41,24 @@ public class FriendDetailActivity extends AppCompatActivity {
 
     public void sendMessageOnClick(View view) {
         Intent intent = new Intent();
-        String chatTitle = tv_friendName.getText().toString();
-        int Id = 0 ;// 获取聊天id
-        intent.putExtra("user",username);
-        intent.putExtra("chatTitle", chatTitle);
-        intent.putExtra("id", Id);
-        intent.setClass(FriendDetailActivity.this,ChatActivity.class);
-        startActivity(intent);
+        String friend = tv_friendName.getText().toString();
+        ChatsDao dao = ChatsDatabase.getDatabaseInstance(FriendDetailActivity.this).getChatsDao();
+        List<Chat> chatList = dao.getChatsListByUserAndFriend(username,friend);
+        if(chatList.size()>0){
+            Chat chat = chatList.get(0);
+            intent.putExtra("user",chat.getUser());
+            intent.putExtra("chatTitle", chat.getChatTitle());
+            intent.putExtra("id", chat.getId());
+            intent.setClass(FriendDetailActivity.this,ChatActivity.class);
+            startActivity(intent);
+        }else{
+            int Id = 0 ;// 获取聊天id
+            intent.putExtra("user",username);
+            intent.putExtra("chatTitle", friend);
+            intent.putExtra("id", Id);
+            intent.setClass(FriendDetailActivity.this,ChatActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void friend_detail_back_onClick(View view) {
